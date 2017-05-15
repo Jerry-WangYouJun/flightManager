@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Role" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="roleLevel" property="rolelevel" jdbcType="VARCHAR" />
+    <result column="roleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="roleNo" property="roleno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, remark, roleLevel, roleName, roleNo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectRoleCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Supplier" >
+    select 
+    count(1)
+    from role where 1=1 
+    <if test="rolelevel != null and rolelevel != ''" >
+		 and roleLevel = #{rolelevel}   
+      </if>
+      <if test="rolename != null and rolename != ''" >
+         and roleName like CONCAT('%',#{rolename},'%' )  
+      </if>
+      <if test="roleno != null and roleno != ''" >
+         and roleNo like CONCAT('%',#{roleno},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectRoleByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Role" >
+    select 
+    <include refid="Base_Column_List" />
+    from role where 1=1 
+   	  <if test="rolelevel != null and rolelevel != ''" >
+		 and roleLevel = #{rolelevel}   
+      </if>
+      <if test="rolename != null and rolename != ''" >
+         and roleName like CONCAT('%',#{rolename},'%' )  
+      </if>
+      <if test="roleno != null and roleno != ''" >
+         and roleNo like CONCAT('%',#{roleno},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Role" >
+    insert into role (ID, remark, roleLevel, 
+      roleName, roleNo)
+    values (#{id,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{rolelevel,jdbcType=VARCHAR}, 
+      #{rolename,jdbcType=VARCHAR}, #{roleno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="rolelevel != null" >
+        roleLevel,
+      </if>
+      <if test="rolename != null" >
+        roleName,
+      </if>
+      <if test="roleno != null" >
+        roleNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="rolelevel != null" >
+        #{rolelevel,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roleno != null" >
+        #{roleno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Role" >
+    update role
+    <set >
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="rolelevel != null" >
+        roleLevel = #{rolelevel,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null" >
+        roleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roleno != null" >
+        roleNo = #{roleno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Role" >
+    update role
+    set remark = #{remark,jdbcType=VARCHAR},
+      roleLevel = #{rolelevel,jdbcType=VARCHAR},
+      roleName = #{rolename,jdbcType=VARCHAR},
+      roleNo = #{roleno,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

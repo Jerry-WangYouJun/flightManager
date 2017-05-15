@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.DictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Dictionary" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="dicCode" property="diccode" jdbcType="VARCHAR" />
+    <result column="dicNo" property="dicno" jdbcType="VARCHAR" />
+    <result column="dicSort" property="dicsort" jdbcType="VARCHAR" />
+    <result column="dicType" property="dictype" jdbcType="VARCHAR" />
+    <result column="dicValue" property="dicvalue" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="validateFlag" property="validateflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, dicCode, dicNo, dicSort, dicType, dicValue, remark, validateFlag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+   <select id="selectDicsByDicNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+      dicCode ,
+      dicValue 
+    from dictionary
+    where dicNo = #{dicNo}
+  </select>
+  
+  <select id="selectDicsCountBywhere" resultType="java.lang.Long" parameterType="com.pojo.Dictionary" >
+    select 
+    count(1)
+    from dictionary where 1=1 
+    <if test="dictype != null and dictype != ''" >
+		 and dicType like  CONCAT('%',#{dictype},'%' )  
+      </if>
+      <if test="diccode != null and diccode != ''" >
+         and dicCode like CONCAT('%',#{diccode},'%' )  
+      </if>
+      <if test="dicvalue != null and dicvalue != ''" >
+         and dicValue like CONCAT('%',#{dicvalue},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectDicsBywhere" resultMap="BaseResultMap" parameterType="com.pojo.Dictionary" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary where 1=1 
+    <if test="dictype != null and dictype != ''" >
+		 and dicType like  CONCAT('%',#{dictype},'%' )  
+      </if>
+      <if test="diccode != null and diccode != ''" >
+         and dicCode like CONCAT('%',#{diccode},'%' )  
+      </if>
+      <if test="dicvalue != null and dicvalue != ''" >
+         and dicValue like CONCAT('%',#{dicvalue},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dictionary
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Dictionary" >
+    insert into dictionary (ID, dicCode, dicNo, 
+      dicSort, dicType, dicValue, 
+      remark, validateFlag)
+    values (#{id,jdbcType=INTEGER}, #{diccode,jdbcType=VARCHAR}, #{dicno,jdbcType=VARCHAR}, 
+      #{dicsort,jdbcType=VARCHAR}, #{dictype,jdbcType=VARCHAR}, #{dicvalue,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{validateflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Dictionary" >
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="diccode != null" >
+        dicCode,
+      </if>
+      <if test="dicno != null" >
+        dicNo,
+      </if>
+      <if test="dicsort != null" >
+        dicSort,
+      </if>
+      <if test="dictype != null" >
+        dicType,
+      </if>
+      <if test="dicvalue != null" >
+        dicValue,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="validateflag != null" >
+        validateFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="diccode != null" >
+        #{diccode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicno != null" >
+        #{dicno,jdbcType=VARCHAR},
+      </if>
+      <if test="dicsort != null" >
+        #{dicsort,jdbcType=VARCHAR},
+      </if>
+      <if test="dictype != null" >
+        #{dictype,jdbcType=VARCHAR},
+      </if>
+      <if test="dicvalue != null" >
+        #{dicvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="validateflag != null" >
+        #{validateflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Dictionary" >
+    update dictionary
+    <set >
+      <if test="diccode != null" >
+        dicCode = #{diccode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicno != null" >
+        dicNo = #{dicno,jdbcType=VARCHAR},
+      </if>
+      <if test="dicsort != null" >
+        dicSort = #{dicsort,jdbcType=VARCHAR},
+      </if>
+      <if test="dictype != null" >
+        dicType = #{dictype,jdbcType=VARCHAR},
+      </if>
+      <if test="dicvalue != null" >
+        dicValue = #{dicvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="validateflag != null" >
+        validateFlag = #{validateflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Dictionary" >
+    update dictionary
+    set dicCode = #{diccode,jdbcType=VARCHAR},
+      dicNo = #{dicno,jdbcType=VARCHAR},
+      dicSort = #{dicsort,jdbcType=VARCHAR},
+      dicType = #{dictype,jdbcType=VARCHAR},
+      dicValue = #{dicvalue,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      validateFlag = #{validateflag,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

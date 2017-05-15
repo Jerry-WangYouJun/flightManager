@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.InstockMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Instock" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="instockDate" property="instockdate" jdbcType="TIMESTAMP" />
+    <result column="instockNo" property="instockno" jdbcType="VARCHAR" />
+    <result column="instockState" property="instockstate" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="stockId" property="stockid" jdbcType="VARCHAR" />
+    <result column="supplierId" property="supplierid" jdbcType="VARCHAR" />
+     <result column="goodId" property="goodId" jdbcType="VARCHAR" />
+     <result column="numbers" property="numbers" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, instockDate, instockNo, instockState, remark, stockId, supplierId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from instock
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByWhere" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from instock
+    where 1=1
+     <if test="id != null and id !='' " >
+      and  ID = #{id}
+     </if>
+     <if test="instockNo != null and instockNo !='' " >
+      and   instockNo = #{instockNo}
+     </if>
+     <if test="stockId != null and stockId !='' " >
+      and   stockId = #{stockId}
+     </if>
+     <if test="supplierId != null and supplierId !='' " >
+      and   supplierId = #{supplierId}
+     </if>
+     <if test="instockState != null and instockState !='' " >
+      and   instockState = #{instockState}
+     </if>
+     <if test="instockDateStart != null and instockDateStart !='' " >
+      and   instockDate &gt;= #{instockDateStart}
+     </if>
+     
+     <if test="instockDateEnd != null and instockDateEnd !='' " >
+      and   instockDate &lt;= #{instockDateEnd}
+     </if>
+    
+  </select>
+  
+  
+  <select id="selectInstockInfo" resultType="map" parameterType="java.util.HashMap" >
+    SELECT
+		i.ID AS id,
+		i.instockNo AS instockNo,
+		s.stockName AS stockName,
+		p.supplierName AS supplierName,
+		i.instockDate AS instockDate,
+		i.instockState AS instockState,
+		i.remark AS remark , 
+		g.productNo  ,
+		g.productname ,
+		i.numbers
+	FROM
+		instock i
+	LEFT JOIN stock s ON i.stockId = s.ID
+	LEFT JOIN supplier p ON i.supplierId = p.ID
+	left join goods g on i.goodid = g.id
+	where 1=1
+     <if test="id != null and id !='' " >
+       and i.ID = #{id}
+     </if>
+     <if test="instockNo != null and instockNo !='' " >
+       and  i.instockNo = #{instockNo}
+     </if>
+     <if test="stockId != null and stockId !='' " >
+       and  i.stockId = #{stockId}
+     </if>
+     <if test="supplierId != null and supplierId !='' " >
+       and  i.supplierId = #{supplierId}
+     </if>
+     <if test="instockState != null and instockState !='' " >
+       and  i.instockState = #{instockState}
+     </if>
+     <if test="instockDateStart != null and instockDateStart !='' " >
+       and  i.instockDate &gt;= #{instockDateStart}
+     </if>
+     
+     <if test="instockDateEnd != null and instockDateEnd !='' " >
+       and  i.instockDate &lt;= #{instockDateEnd}
+     </if>
+    
+  </select>
+  
+  <select id="instockCountByMap" resultType="long" parameterType="java.util.HashMap" >
+    select 
+     count(*)
+    from instock
+    where 1=1
+     <if test="id != null and id !='' " >
+       and  ID = #{id}
+     </if>
+     <if test="instockNo != null and instockNo !='' " >
+       and  instockNo = #{instockNo}
+     </if>
+     <if test="stockId != null and stockId !='' " >
+       and  stockId = #{stockId}
+     </if>
+     <if test="supplierId != null and supplierId !='' " >
+       and  supplierId = #{supplierId}
+     </if>
+     <if test="instockState != null and instockState !='' " >
+       and  instockState = #{instockState}
+     </if>
+     <if test="instockDateStart != null and instockDateStart !='' " >
+       and  instockDate &gt;= #{instockDateStart}
+     </if>
+     
+     <if test="instockDateEnd != null and instockDateEnd !='' " >
+       and  instockDate &lt;= #{instockDateEnd}
+     </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from instock
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Instock" >
+    insert into instock (ID, instockDate, instockNo, 
+      instockState, remark, stockId, 
+      supplierId , goodId ,numbers)
+    values (#{id,jdbcType=INTEGER}, #{instockdate,jdbcType=TIMESTAMP}, #{instockno,jdbcType=VARCHAR}, 
+      #{instockstate,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{stockid,jdbcType=VARCHAR}, 
+      #{supplierid,jdbcType=VARCHAR} , #{goodId,jdbcType=VARCHAR} , #{numbers,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Instock" >
+    insert into instock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="instockdate != null" >
+        instockDate,
+      </if>
+      <if test="instockno != null" >
+        instockNo,
+      </if>
+      <if test="instockstate != null" >
+        instockState,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="stockid != null" >
+        stockId,
+      </if>
+      <if test="supplierid != null" >
+        supplierId,
+      </if>
+      <if test="goodId != null" >
+        goodId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="instockdate != null" >
+        #{instockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instockno != null" >
+        #{instockno,jdbcType=VARCHAR},
+      </if>
+      <if test="instockstate != null" >
+        #{instockstate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="stockid != null" >
+        #{stockid,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierid != null" >
+        #{supplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Instock" >
+    update instock
+    <set >
+      <if test="instockdate != null" >
+        instockDate = #{instockdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="instockno != null" >
+        instockNo = #{instockno,jdbcType=VARCHAR},
+      </if>
+      <if test="instockstate != null" >
+        instockState = #{instockstate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="stockid != null" >
+        stockId = #{stockid,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierid != null" >
+        supplierId = #{supplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        goodId = #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null" >
+        numbers = #{numbers,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Instock" >
+    update instock
+    set instockDate = #{instockdate,jdbcType=TIMESTAMP},
+      instockNo = #{instockno,jdbcType=VARCHAR},
+      instockState = #{instockstate,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      stockId = #{stockid,jdbcType=VARCHAR},
+      supplierId = #{supplierid,jdbcType=VARCHAR},
+      goodId = #{goodId,jdbcType=VARCHAR},
+      numbers = #{numbers,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

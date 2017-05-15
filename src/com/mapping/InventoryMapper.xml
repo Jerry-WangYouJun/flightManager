@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.InventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Inventory" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="stockId" property="stockid" jdbcType="VARCHAR" />
+    <result column="productNo" property="productno" jdbcType="VARCHAR" />
+    <result column="productName" property="productname" jdbcType="VARCHAR" />
+    <result column="productStandard" property="productstandard" jdbcType="VARCHAR" />
+    <result column="inventoryNum" property="inventorynum" jdbcType="DECIMAL" />
+    <result column="inventoryPrice" property="inventoryprice" jdbcType="DECIMAL" />
+    <result column="maxNum" property="maxnum" jdbcType="DECIMAL" />
+    <result column="minNum" property="minnum" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, stockId, productNo, productName, productStandard, inventoryNum, inventoryPrice, 
+    maxNum, minNum, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from inventory
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByStockIdAndProductNo" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+  	<include refid="Base_Column_List" />
+    from inventory
+    where stockId = #{stockId}
+    and productNo = #{productNo}
+  </select>
+  
+  <select id="findProductByQ" resultType="map" parameterType="java.util.HashMap" >
+   SELECT
+		i.productNo  as productno,
+		i.productName as productname,
+		i.productStandard as productstandard,
+	    i.inventoryNum as leftNum,
+		g.unit as unit,
+	    g.price as  price
+	FROM
+		inventory i
+	LEFT JOIN stock s ON i.stockId = s.ID
+	LEFT JOIN goods g ON i.productNo = g.productNo
+	where 1=1 
+    	and i.stockId = #{stockId}
+    <if test="q != null and q != ''" >
+        and i.productNo like #{q}
+     </if>
+  </select>
+  
+  <select id="selectByWhere" resultType="map" parameterType="java.util.HashMap" >
+		    SELECT
+			stockid,
+			stockName,
+			productNo,
+			productName,
+			productStandard,
+			unit,
+			sum(numbers) numbers,
+			price
+		FROM
+			(
+				SELECT
+					stockid,
+					stockName,
+					g.productNo,
+					g.productName,
+					g.productStandard,
+					unit,
+					numbers,
+					price
+				FROM
+					instock i,
+					goods g,
+					stock s
+				WHERE
+					i.goodid = g.id
+				AND i.stockId = s.id
+				GROUP BY
+					g.id,
+					stockName
+				UNION ALL
+					SELECT
+						stockid,
+						stockName,
+						g.productNo,
+						g.productName,
+						g.productStandard,
+						unit,
+						0 - i.outstockNum AS numbers,
+						price
+					FROM
+						outstock i,
+						goods g,
+						stock s
+					WHERE
+						i.goodid = g.id
+					AND i.stockId = s.id
+					GROUP BY
+						g.id,
+						stockName
+			) a
+		WHERE 1=1 
+		  <if test="itemNo != null and itemNo != ''" >
+        	and productNo like #{itemNo}
+	      </if>
+		  <if test="itemName != null and itemName != ''" >
+	        and productName like #{itemName}
+	      </if>
+		  <if test="stockId != null and stockId != ''" >
+	        and stockId = #{stockId}
+	      </if>
+		GROUP BY
+			stockName,
+			productNo 
+	  
+  </select>
+  
+  <select id="selectCountByWhere" resultType="long" parameterType="java.util.HashMap" >
+    SELECT
+		count(stockid)
+	FROM
+		(
+				SELECT
+					stockid,
+					stockName,
+					g.productNo,
+					g.productName,
+					g.productStandard,
+					unit,
+					numbers,
+					price
+				FROM
+					instock i,
+					goods g,
+					stock s
+				WHERE
+					i.goodid = g.id
+				AND i.stockId = s.id
+				GROUP BY
+					g.id,
+					stockName
+				UNION ALL
+					SELECT
+						stockid,
+						stockName,
+						g.productNo,
+						g.productName,
+						g.productStandard,
+						unit,
+						0 - i.outstockNum AS numbers,
+						price
+					FROM
+						outstock i,
+						goods g,
+						stock s
+					WHERE
+						i.goodid = g.id
+					AND i.stockId = s.id
+					GROUP BY
+						g.id,
+						stockName
+			) a
+		WHERE 1=1 
+	  <if test="itemNo != null and itemNo != ''" >
+        and g.productNo like #{itemNo}
+      </if>
+	  <if test="itemName != null and itemName != ''" >
+        and g.productName like #{itemName}
+      </if>
+	  <if test="stockId != null and stockId != ''" >
+        and i.stockId = #{stockId}
+      </if>
+      GROUP BY
+			stockName,
+			productNo 
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from inventory
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Inventory" >
+    insert into inventory (ID, stockId, productNo, 
+      productName, productStandard, inventoryNum, 
+      inventoryPrice, maxNum, minNum, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{stockid,jdbcType=VARCHAR}, #{productno,jdbcType=VARCHAR}, 
+      #{productname,jdbcType=VARCHAR}, #{productstandard,jdbcType=VARCHAR}, #{inventorynum,jdbcType=DECIMAL}, 
+      #{inventoryprice,jdbcType=DECIMAL}, #{maxnum,jdbcType=DECIMAL}, #{minnum,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Inventory" >
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="stockid != null" >
+        stockId,
+      </if>
+      <if test="productno != null" >
+        productNo,
+      </if>
+      <if test="productname != null" >
+        productName,
+      </if>
+      <if test="productstandard != null" >
+        productStandard,
+      </if>
+      <if test="inventorynum != null" >
+        inventoryNum,
+      </if>
+      <if test="inventoryprice != null" >
+        inventoryPrice,
+      </if>
+      <if test="maxnum != null" >
+        maxNum,
+      </if>
+      <if test="minnum != null" >
+        minNum,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stockid != null" >
+        #{stockid,jdbcType=VARCHAR},
+      </if>
+      <if test="productno != null" >
+        #{productno,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="productstandard != null" >
+        #{productstandard,jdbcType=VARCHAR},
+      </if>
+      <if test="inventorynum != null" >
+        #{inventorynum,jdbcType=DECIMAL},
+      </if>
+      <if test="inventoryprice != null" >
+        #{inventoryprice,jdbcType=DECIMAL},
+      </if>
+      <if test="maxnum != null" >
+        #{maxnum,jdbcType=DECIMAL},
+      </if>
+      <if test="minnum != null" >
+        #{minnum,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Inventory" >
+    update inventory
+    <set >
+      <if test="stockid != null" >
+        stockId = #{stockid,jdbcType=VARCHAR},
+      </if>
+      <if test="productno != null" >
+        productNo = #{productno,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        productName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="productstandard != null" >
+        productStandard = #{productstandard,jdbcType=VARCHAR},
+      </if>
+      <if test="inventorynum != null" >
+        inventoryNum = #{inventorynum,jdbcType=DECIMAL},
+      </if>
+      <if test="inventoryprice != null" >
+        inventoryPrice = #{inventoryprice,jdbcType=DECIMAL},
+      </if>
+      <if test="maxnum != null" >
+        maxNum = #{maxnum,jdbcType=DECIMAL},
+      </if>
+      <if test="minnum != null" >
+        minNum = #{minnum,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Inventory" >
+    update inventory
+    set stockId = #{stockid,jdbcType=VARCHAR},
+      productNo = #{productno,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR},
+      productStandard = #{productstandard,jdbcType=VARCHAR},
+      inventoryNum = #{inventorynum,jdbcType=DECIMAL},
+      inventoryPrice = #{inventoryprice,jdbcType=DECIMAL},
+      maxNum = #{maxnum,jdbcType=DECIMAL},
+      minNum = #{minnum,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

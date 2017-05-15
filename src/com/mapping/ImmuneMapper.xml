@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.ImmuneMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Immune" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="immunename" property="immunename" jdbcType="VARCHAR" />
+    <result column="sheeptype" property="sheeptype" jdbcType="VARCHAR" />
+    <result column="immunetype" property="immunetype" jdbcType="VARCHAR" />
+    <result column="intervals" property="intervals" jdbcType="VARCHAR" />
+    <result column="necessary" property="necessary" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, immunename, sheeptype, immunetype, intervals, necessary, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from immune
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from immune
+  </select>
+   <select id="selectImmuneCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Immune" >
+    select 
+    count(1)
+    from immune where 1=1 
+    <if test="immunename != null and immunename != ''" >
+		 and immunename like  CONCAT('%',#{immunename},'%' )  
+      </if>
+      <if test="sheeptype != null and sheeptype != ''" >
+         and sheeptype like CONCAT('%',#{sheeptype},'%' )  
+      </if>
+      <if test="immunetype != null and immunetype != ''" >
+         and immunetype like CONCAT('%',#{immunetype},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectImmuneByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Immune" >
+    select 
+    <include refid="Base_Column_List" />
+    from immune where 1=1 
+   	  <if test="immunename != null and immunename != ''" >
+		 and immunename like  CONCAT('%',#{immunename},'%' )  
+      </if>
+      <if test="sheeptype != null and sheeptype != ''" >
+         and sheeptype like CONCAT('%',#{sheeptype},'%' )  
+      </if>
+      <if test="immunetype != null and immunetype != ''" >
+         and immunetype like CONCAT('%',#{immunetype},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from immune
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Immune" >
+    insert into immune ( immunename, sheeptype, 
+      immunetype, intervals, necessary ,remark
+      )
+    values ( #{immunename,jdbcType=VARCHAR}, #{sheeptype,jdbcType=VARCHAR}, 
+      #{immunetype,jdbcType=VARCHAR}, #{intervals,jdbcType=VARCHAR}, #{necessary,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Immune" >
+    insert into immune
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="immunename != null" >
+        immunename,
+      </if>
+      <if test="sheeptype != null" >
+        sheeptype,
+      </if>
+      <if test="immunetype != null" >
+        immunetype,
+      </if>
+      <if test="intervals != null" >
+        intervals,
+      </if>
+        <if test="necessary != null" >
+        necessary,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="immunename != null" >
+        #{immunename,jdbcType=VARCHAR},
+      </if>
+      <if test="sheeptype != null" >
+        #{sheeptype,jdbcType=VARCHAR},
+      </if>
+      <if test="immunetype != null" >
+        #{immunetype,jdbcType=VARCHAR},
+      </if>
+      <if test="intervals != null" >
+        #{intervals,jdbcType=VARCHAR},
+      </if>
+      <if test="necessary != null" >
+        #{necessary,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Immune" >
+    update immune
+    <set >
+      <if test="immunename != null" >
+        immunename = #{immunename,jdbcType=VARCHAR},
+      </if>
+      <if test="sheeptype != null" >
+        sheeptype = #{sheeptype,jdbcType=VARCHAR},
+      </if>
+      <if test="immunetype != null" >
+        immunetype = #{immunetype,jdbcType=VARCHAR},
+      </if>
+      <if test="intervals != null" >
+        intervals = #{intervals,jdbcType=VARCHAR},
+      </if>
+      <if test="necessary != null" >
+        necessary = #{necessary,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Immune" >
+    update immune
+    set immunename = #{immunename,jdbcType=VARCHAR},
+      sheeptype = #{sheeptype,jdbcType=VARCHAR},
+      immunetype = #{immunetype,jdbcType=VARCHAR},
+      intervals = #{intervals,jdbcType=VARCHAR},
+      necessary = #{necessary,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

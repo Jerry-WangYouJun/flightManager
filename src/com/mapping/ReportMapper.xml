@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.ReportMapper" >
+  <select id="findInstockMonthInit"  resultType="map"  parameterType="java.util.HashMap" >
+   SELECT
+		A.STOCKID,
+		(
+			SELECT
+				P.STOCKNAME
+			FROM
+				STOCK P
+			WHERE
+				P.ID = A.STOCKID
+		) AS STOCKNAME,
+		A.PRODUCTNO AS PRODUCTNO,
+		A.PRODUCTNAME AS PRODUCTNAME,
+		A.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		IFNULL(M.PRODUCTNUM, 0) AS STARTINNUM,
+		IFNULL(M.TOTALPRICE, 0) AS STARTINTOTAL
+	FROM
+		INVENTORY A
+	LEFT JOIN (
+		SELECT
+			S.STOCKID AS STOCKID,
+			K.PRODUCTNO AS PRODUCTNO,
+			K.PRODUCTNAME AS PRODUCTNAME,
+			K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+			SUM(K.PRODUCTNUM) AS PRODUCTNUM,
+			SUM(K.TOTALPRICE) AS TOTALPRICE
+		FROM
+			INSTOCK S,
+			INSTOCKDETAIL K
+		WHERE
+			S.ID = K.INSTOCKID
+			AND S.INSTOCKSTATE = '02'
+		<if test="startDate != null and startDate != ''">
+			AND S.INSTOCKDATE &lt; #{startDate}
+		</if>
+		<if test="stockId != null and stockId != ''">
+			AND S.STOCKID = #{stockId}
+		</if>
+		<if test="productNo != null and productNo != ''">
+			AND S.PRODUCTNO like #{productNo}
+		</if>
+		GROUP BY
+			S.STOCKID,
+			K.PRODUCTNO,
+			K.PRODUCTNAME,
+			K.PRODUCTSTANDARD
+		ORDER BY
+			S.STOCKID,
+			K.PRODUCTNO
+	) M ON A.STOCKID = M.STOCKID
+	WHERE
+		A.PRODUCTNO = M.PRODUCTNO
+  </select>
+  
+   <select id="findMonthReportCount"  resultType="long"  parameterType="java.util.HashMap" >
+   SELECT
+		count(*)
+	FROM
+		INVENTORY A
+	LEFT JOIN (
+		SELECT
+			S.STOCKID AS STOCKID,
+			K.PRODUCTNO AS PRODUCTNO,
+			K.PRODUCTNAME AS PRODUCTNAME,
+			K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+			SUM(K.PRODUCTNUM) AS PRODUCTNUM,
+			SUM(K.TOTALPRICE) AS TOTALPRICE
+		FROM
+			INSTOCK S,
+			INSTOCKDETAIL K
+		WHERE
+			S.ID = K.INSTOCKID
+			AND S.INSTOCKSTATE = '02'
+		<if test="startDate != null and startDate != ''">
+			AND S.INSTOCKDATE &lt; #{startDate}
+		</if>
+		<if test="stockId != null and stockId != ''">
+			AND S.STOCKID = #{stockId}
+		</if>
+		<if test="productNo != null and productNo != ''">
+			AND S.PRODUCTNO like #{productNo}
+		</if>
+		GROUP BY
+			S.STOCKID,
+			K.PRODUCTNO,
+			K.PRODUCTNAME,
+			K.PRODUCTSTANDARD
+		ORDER BY
+			S.STOCKID,
+			K.PRODUCTNO
+	) M ON A.STOCKID = M.STOCKID
+	WHERE
+		A.PRODUCTNO = M.PRODUCTNO
+  </select>
+  
+  
+  <select id="findInstocksMonth" resultType="map" parameterType="java.util.HashMap" >
+   SELECT
+		A.STOCKID,
+		(
+			SELECT
+				P.STOCKNAME
+			FROM
+				STOCK P
+			WHERE
+				P.ID = A.STOCKID
+		) AS STOCKNAME,
+		A.PRODUCTNO AS PRODUCTNO,
+		A.PRODUCTNAME AS PRODUCTNAME,
+		A.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		IFNULL(M.PRODUCTNUM, 0) AS INNUM,
+		IFNULL(M.TOTALPRICE, 0) AS INTOTAL
+	FROM
+		INVENTORY A
+	LEFT JOIN (
+		SELECT
+			S.STOCKID AS STOCKID,
+			K.PRODUCTNO AS PRODUCTNO,
+			K.PRODUCTNAME AS PRODUCTNAME,
+			K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+			SUM(K.PRODUCTNUM) AS PRODUCTNUM,
+			SUM(K.TOTALPRICE) AS TOTALPRICE
+		FROM
+			INSTOCK S,
+			INSTOCKDETAIL K
+		WHERE
+			S.ID = K.INSTOCKID
+			AND S.INSTOCKSTATE = '02'
+		<if test="startDate != null and startDate != ''">
+			AND S.INSTOCKDATE &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND S.INSTOCKDATE &lt;= #{endDate}
+		</if>
+		<if test="stockId != null and stockId != ''">
+			AND S.STOCKID = #{stockId}
+		</if>
+		<if test="productNo != null and productNo != ''">
+			AND S.PRODUCTNO like #{productNo}
+		</if>
+		GROUP BY
+			S.STOCKID,
+			K.PRODUCTNO,
+			K.PRODUCTNAME,
+			K.PRODUCTSTANDARD
+		ORDER BY
+			S.STOCKID,
+			K.PRODUCTNO
+	) M ON A.STOCKID = M.STOCKID
+	WHERE
+		A.PRODUCTNO = M.PRODUCTNO
+  </select>
+  <select id="findOutstockMonthInit" resultType="map" parameterType="java.util.HashMap" >
+   SELECT
+		A.STOCKID,
+		(
+			SELECT
+				P.STOCKNAME
+			FROM
+				STOCK P
+			WHERE
+				P.ID = A.STOCKID
+		) AS STOCKNAME,
+		A.PRODUCTNO AS PRODUCTNO,
+		A.PRODUCTNAME AS PRODUCTNAME,
+		A.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		IFNULL(M.PRODUCTNUM, 0) AS STARTOUTNUM,
+		IFNULL(M.TOTALPRICE, 0) AS STARTOUTTOTAL
+	FROM
+		INVENTORY A
+	LEFT JOIN (
+		SELECT
+			S.STOCKID AS STOCKID,
+			K.PRODUCTNO AS PRODUCTNO,
+			K.PRODUCTNAME AS PRODUCTNAME,
+			K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+			SUM(K.PRODUCTNUM) AS PRODUCTNUM,
+			SUM(K.TOTALPRICE) AS TOTALPRICE
+		FROM
+			OUTSTOCK S,
+			OUTSTOCKDETAIL K
+		WHERE
+			S.ID = K.OUTSTOCKID
+			AND S.OUTSTOCKSTATE = '02'
+		<if test="startDate != null and startDate != ''">
+			AND S.OUTSTOCKDATE &lt; #{startDate}
+		</if>
+		<if test="stockId != null and stockId != ''">
+			AND S.STOCKID = #{stockId}
+		</if>
+		<if test="productNo != null and productNo != ''">
+			AND S.PRODUCTNO like #{productNo}
+		</if>
+		GROUP BY
+			S.STOCKID,
+			K.PRODUCTNO,
+			K.PRODUCTNAME,
+			K.PRODUCTSTANDARD
+		ORDER BY
+			S.STOCKID,
+			K.PRODUCTNO
+	) M ON A.STOCKID = M.STOCKID
+	WHERE
+		A.PRODUCTNO = M.PRODUCTNO
+  </select>
+  
+  <select id="findOutstocksMonth" resultType="map" parameterType="java.util.HashMap" >
+   SELECT
+		A.STOCKID,
+		(
+			SELECT
+				P.STOCKNAME
+			FROM
+				STOCK P
+			WHERE
+				P.ID = A.STOCKID
+		) AS STOCKNAME,
+		A.PRODUCTNO AS PRODUCTNO,
+		A.PRODUCTNAME AS PRODUCTNAME,
+		A.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		IFNULL(M.PRODUCTNUM, 0) AS OUTNUM,
+		IFNULL(M.TOTALPRICE, 0) AS OUTTOTAL
+	FROM
+		INVENTORY A
+	LEFT JOIN (
+		SELECT
+			S.STOCKID AS STOCKID,
+			K.PRODUCTNO AS PRODUCTNO,
+			K.PRODUCTNAME AS PRODUCTNAME,
+			K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+			SUM(K.PRODUCTNUM) AS PRODUCTNUM,
+			SUM(K.TOTALPRICE) AS TOTALPRICE
+		FROM
+			OUTSTOCK S,
+			OUTSTOCKDETAIL K
+		WHERE
+			S.ID = K.OUTSTOCKID
+			AND S.OUTSTOCKSTATE = '02'
+		<if test="startDate != null and startDate != ''">
+			AND S.OUTSTOCKDATE &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND S.OUTSTOCKDATE &lt;= #{endDate}
+		</if>
+		<if test="stockId != null and stockId != ''">
+			AND S.STOCKID = #{stockId}
+		</if>
+		<if test="productNo != null and productNo != ''">
+			AND S.PRODUCTNO like #{productNo}
+		</if>
+		GROUP BY
+			S.STOCKID,
+			K.PRODUCTNO,
+			K.PRODUCTNAME,	
+			K.PRODUCTSTANDARD
+		ORDER BY
+			S.STOCKID,
+			K.PRODUCTNO
+	) M ON A.STOCKID = M.STOCKID
+	WHERE
+		A.PRODUCTNO = M.PRODUCTNO
+  </select>
+  
+  <!--***********************************物资台账****************************************-->
+  <select id="findGoodsInstockReport"  resultType="map"  parameterType="java.util.HashMap" >
+  SELECT
+		K.PRODUCTNO AS PRODUCTNO,
+		K.PRODUCTNAME AS PRODUCTNAME,
+		K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		SUM(K.PRODUCTNUM) AS INNUM,
+		SUM(K.TOTALPRICE) AS INTOTAL
+	FROM
+		INSTOCK S,
+		INSTOCKDETAIL K
+	WHERE
+		S.ID = K.INSTOCKID
+		AND S.INSTOCKSTATE = '02'
+	<if test="startDate != null and startDate != ''">
+		AND S.INSTOCKDATE &lt; #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+		AND S.INSTOCKDATE &lt;= #{endDate}
+	</if>
+	<if test="productNo != null and productNo != ''">
+		AND K.PRODUCTNO like #{productNo}
+	</if>
+	GROUP BY
+		K.PRODUCTNO,
+		K.PRODUCTNAME,
+		K.PRODUCTSTANDARD
+	ORDER BY
+		K.PRODUCTNO
+	
+  </select>
+  <select id="findGoodsInstockReportCount"  resultType="Long"  parameterType="java.util.HashMap" >
+  SELECT 
+  	COUNT(*) 
+  FROM (
+  	SELECT
+		K.PRODUCTNO AS PRODUCTNO,
+		K.PRODUCTNAME AS PRODUCTNAME,
+		K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		SUM(K.PRODUCTNUM) AS INNUM,
+		SUM(K.TOTALPRICE) AS INTOTAL
+	FROM
+		INSTOCK S,
+		INSTOCKDETAIL K
+	WHERE
+		S.ID = K.INSTOCKID
+		AND S.INSTOCKSTATE = '02'
+	<if test="startDate != null and startDate != ''">
+		AND S.INSTOCKDATE &lt; #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+		AND S.INSTOCKDATE &lt;= #{endDate}
+	</if>
+	<if test="productNo != null and productNo != ''">
+		AND K.PRODUCTNO like #{productNo}
+	</if>
+	GROUP BY
+		K.PRODUCTNO,
+		K.PRODUCTNAME,
+		K.PRODUCTSTANDARD
+	) A
+  </select>
+  <select id="findGoodsOutstockReport"  resultType="map"  parameterType="java.util.HashMap" >
+ SELECT
+		K.PRODUCTNO AS PRODUCTNO,
+		K.PRODUCTNAME AS PRODUCTNAME,
+		K.PRODUCTSTANDARD AS PRODUCTSTANDARD,
+		SUM(K.PRODUCTNUM) AS OUTNUM,
+		SUM(K.TOTALPRICE) AS OUTTOTAL
+	FROM
+		OUTSTOCK S,
+		OUTSTOCKDETAIL K
+	WHERE
+		S.ID = K.OUTSTOCKID
+		AND S.OUTSTOCKSTATE = '02'
+	<if test="startDate != null and startDate != ''">
+		AND S.OUTSTOCKDATE &lt; #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+		AND S.OUTSTOCKDATE &lt;= #{endDate}
+	</if>
+	<if test="productNo != null and productNo != ''">
+		AND K.PRODUCTNO like #{productNo}
+	</if>
+	GROUP BY
+		K.PRODUCTNO,
+		K.PRODUCTNAME,
+		K.PRODUCTSTANDARD
+	ORDER BY
+		K.PRODUCTNO
+  </select>
+  
+  <!--***********************************物资台账明细****************************************-->
+  <select id="findGoodsDetailReport"  resultType="map"  parameterType="java.util.HashMap" >
+  	SELECT
+		a.operateDate AS 'operateDate',
+		a.productNo AS 'productNo',
+		a.productName AS 'productName',
+		a.productStandard AS 'productStandard',
+		a.inNum AS 'inNum',
+		a.inTotal AS 'inTotal',
+		a.outNum AS 'outNum',
+		a.outTotal AS 'outTotal'
+	FROM
+		(
+			SELECT
+				s.inStockDate AS 'operateDate',
+				t.productNo AS 'productNo',
+				t.productName AS 'productName',
+				t.productStandard AS 'productStandard',
+				t.productNum AS 'inNum',
+				t.totalPrice AS 'inTotal',
+				0 AS 'outNum',
+				0 AS 'outTotal'
+			FROM
+				instock s,
+				instockdetail t
+			WHERE
+				s.id = t.inStockID
+			AND s.inStockState = '02'
+		<if test="startDate != null and startDate != ''">
+			AND s.inStockDate &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND s.inStockDate &lt;= #{endDate}
+		</if>
+		<if test="productNo != null and productNo != ''">
+			AND t.productNo like #{productNo}
+		</if>
+			UNION
+				SELECT
+					s.outStockDate AS 'operateDate',
+					t.productNo AS 'productNo',
+					t.productName AS 'productName',
+					t.productStandard AS 'productStandard',
+					0 AS 'inNum',
+					0 AS 'inTotal',
+					t.productNum AS 'outNum',
+					t.totalPrice AS 'outTotal'
+				FROM
+					outstock s,
+					outstockdetail t
+				WHERE
+					s.id = t.outStockId
+				AND s.outStockState = '02'
+				<if test="startDate != null and startDate != ''">
+					AND s.outStockDate &gt;= #{startDate}
+				</if>
+				<if test="endDate != null and endDate != ''">
+					AND s.outStockDate &lt;= #{endDate}
+				</if>
+				<if test="productNo != null and productNo != ''">
+					AND t.productNo like #{productNo}
+				</if>
+		) a
+	ORDER BY
+		a.operateDate DESC,
+		a.productNo
+  </select>
+</mapper>
