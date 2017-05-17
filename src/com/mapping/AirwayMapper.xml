@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.AirwayMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Airway" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="flight" property="flight" jdbcType="VARCHAR" />
+    <result column="startdate" property="startdate" jdbcType="VARCHAR" />
+    <result column="flighttime" property="flighttime" jdbcType="VARCHAR" />
+    <result column="flighttype" property="flighttype" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="fromairport" property="fromairport" jdbcType="VARCHAR" />
+    <result column="toairport" property="toairport" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, flight, startdate, flighttime, flighttype, company, fromairport , toairport
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_airway
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_airway
+  </select>
+   <select id="selectAirwayCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Airway" >
+    select 
+    count(1)
+    from t_airway where 1=1 
+    <if test="flight != null and flight != ''" >
+		 and flight like  CONCAT('%',#{flight},'%' )  
+      </if>
+      <if test="startdate != null and startdate != ''" >
+         and startdate like CONCAT('%',#{startdate},'%' )  
+      </if>
+      <if test="flighttime != null and flighttime != ''" >
+         and flighttime like CONCAT('%',#{flighttime},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectAirwayByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Airway" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_airway where 1=1 
+   	  <if test="flight != null and flight != ''" >
+		 and flight like  CONCAT('%',#{flight},'%' )  
+      </if>
+      <if test="startdate != null and startdate != ''" >
+         and startdate like CONCAT('%',#{startdate},'%' )  
+      </if>
+      <if test="flighttime != null and flighttime != ''" >
+         and flighttime like CONCAT('%',#{flighttime},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_airway
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Airway" >
+    insert into t_airway ( flight, startdate, 
+      flighttime, flighttype, company ,fromairport ,toairport 
+      )
+    values ( #{flight,jdbcType=VARCHAR}, #{startdate,jdbcType=VARCHAR}, 
+      #{flighttime,jdbcType=VARCHAR}, #{flighttype,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{fromairport,jdbcType=VARCHAR} , #{toairport,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Airway" >
+    insert into t_airway
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flight != null" >
+        flight,
+      </if>
+      <if test="startdate != null" >
+        startdate,
+      </if>
+      <if test="flighttime != null" >
+        flighttime,
+      </if>
+      <if test="flighttype != null" >
+        flighttype,
+      </if>
+        <if test="company != null" >
+        company,
+      </if>
+      <if test="fromairport != null" >
+        fromairport,
+      </if>
+       <if test="toairport != null" >
+        toairport,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flight != null" >
+        #{flight,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="flighttime != null" >
+        #{flighttime,jdbcType=VARCHAR},
+      </if>
+      <if test="flighttype != null" >
+        #{flighttype,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="fromairport != null" >
+        #{fromairport,jdbcType=VARCHAR},
+      </if>
+      <if test="toairport != null" >
+        #{toairport,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Airway" >
+    update t_airway
+    <set >
+      <if test="flight != null" >
+        flight = #{flight,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        startdate = #{startdate,jdbcType=VARCHAR},
+      </if>
+      <if test="flighttime != null" >
+        flighttime = #{flighttime,jdbcType=VARCHAR},
+      </if>
+      <if test="flighttype != null" >
+        flighttype = #{flighttype,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="fromairport != null" >
+        fromairport = #{fromairport,jdbcType=VARCHAR},
+      </if>
+      <if test="toairport != null" >
+        toairport = #{toairport,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Airway" >
+    update t_airway
+    set flight = #{flight,jdbcType=VARCHAR},
+      startdate = #{startdate,jdbcType=VARCHAR},
+      flighttime = #{flighttime,jdbcType=VARCHAR},
+      flighttype = #{flighttype,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      fromairport = #{fromairport,jdbcType=VARCHAR},
+      toairport =  #{toairport,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

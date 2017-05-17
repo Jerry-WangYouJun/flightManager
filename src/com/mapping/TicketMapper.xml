@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.TicketMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Ticket" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="flight" property="flight" jdbcType="VARCHAR" />
+    <result column="ordercode" property="ordercode" jdbcType="VARCHAR" />
+    <result column="ticketdate" property="ticketdate" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, flight, ordercode, ticketdate, price, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ticket
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ticket
+  </select>
+   <select id="selectTicketCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Ticket" >
+    select 
+    count(1)
+    from t_ticket where 1=1 
+    <if test="flight != null and flight != ''" >
+		 and flight like  CONCAT('%',#{flight},'%' )  
+      </if>
+      <if test="ordercode != null and ordercode != ''" >
+         and ordercode like CONCAT('%',#{ordercode},'%' )  
+      </if>
+      <if test="ticketdate != null and ticketdate != ''" >
+         and ticketdate like CONCAT('%',#{ticketdate},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectTicketByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Ticket" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_ticket where 1=1 
+   	  <if test="flight != null and flight != ''" >
+		 and flight like  CONCAT('%',#{flight},'%' )  
+      </if>
+      <if test="ordercode != null and ordercode != ''" >
+         and ordercode like CONCAT('%',#{ordercode},'%' )  
+      </if>
+      <if test="ticketdate != null and ticketdate != ''" >
+         and ticketdate like CONCAT('%',#{ticketdate},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_ticket
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Ticket" >
+    insert into t_ticket ( flight, ordercode, 
+      ticketdate, price, status
+      )
+    values ( #{flight,jdbcType=VARCHAR}, #{ordercode,jdbcType=VARCHAR}, 
+      #{ticketdate,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Ticket" >
+    insert into t_ticket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flight != null" >
+        flight,
+      </if>
+      <if test="ordercode != null" >
+        ordercode,
+      </if>
+      <if test="ticketdate != null" >
+        ticketdate,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+        <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flight != null" >
+        #{flight,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercode != null" >
+        #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketdate != null" >
+        #{ticketdate,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Ticket" >
+    update t_ticket
+    <set >
+      <if test="flight != null" >
+        flight = #{flight,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercode != null" >
+        ordercode = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketdate != null" >
+        ticketdate = #{ticketdate,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Ticket" >
+    update t_ticket
+    set flight = #{flight,jdbcType=VARCHAR},
+      ordercode = #{ordercode,jdbcType=VARCHAR},
+      ticketdate = #{ticketdate,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

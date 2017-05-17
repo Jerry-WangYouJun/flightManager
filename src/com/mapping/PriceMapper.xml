@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.PriceMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Price" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="added" property="added" jdbcType="NUMERIC" />
+    <result column="rebatetype" property="rebatetype" jdbcType="VARCHAR" />
+    <result column="rebate" property="rebate" jdbcType="NUMERIC" />
+    <result column="airewayid" property="airewayid" jdbcType="VARCHAR" />
+    <result column="classtype" property="classtype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, added, rebatetype, rebate, airewayid, classtype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_price
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_price
+  </select>
+   <select id="selectPriceCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Price" >
+    select 
+    count(1)
+    from t_price where 1=1 
+      <if test="rebatetype != null and rebatetype != ''" >
+         and rebatetype like CONCAT('%',#{rebatetype},'%' )  
+      </if>
+  </select>
+  
+  <select id="selectPriceByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Price" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_price where 1=1 
+      <if test="rebatetype != null and rebatetype != ''" >
+         and rebatetype like CONCAT('%',#{rebatetype},'%' )  
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_price
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Price" >
+    insert into t_price ( added, rebatetype, 
+      rebate, airewayid, classtype
+      )
+    values ( #{added,jdbcType=NUMERIC}, #{rebatetype,jdbcType=VARCHAR}, 
+      #{rebate,jdbcType=NUMERIC}, #{airewayid,jdbcType=VARCHAR}, #{classtype,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Price" >
+    insert into t_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="added != null" >
+        added,
+      </if>
+      <if test="rebatetype != null" >
+        rebatetype,
+      </if>
+      <if test="rebate != null" >
+        rebate,
+      </if>
+      <if test="airewayid != null" >
+        airewayid,
+      </if>
+        <if test="classtype != null" >
+        classtype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="added != null" >
+        #{added,jdbcType=NUMERIC},
+      </if>
+      <if test="rebatetype != null" >
+        #{rebatetype,jdbcType=VARCHAR},
+      </if>
+      <if test="rebate != null" >
+        #{rebate,jdbcType=NUMERIC},
+      </if>
+      <if test="airewayid != null" >
+        #{airewayid,jdbcType=VARCHAR},
+      </if>
+      <if test="classtype != null" >
+        #{classtype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Price" >
+    update t_price
+    <set >
+      <if test="added != null" >
+        added = #{added,jdbcType=NUMERIC},
+      </if>
+      <if test="rebatetype != null" >
+        rebatetype = #{rebatetype,jdbcType=VARCHAR},
+      </if>
+      <if test="rebate != null" >
+        rebate = #{rebate,jdbcType=NUMERIC},
+      </if>
+      <if test="airewayid != null" >
+        airewayid = #{airewayid,jdbcType=VARCHAR},
+      </if>
+      <if test="classtype != null" >
+        classtype = #{classtype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Price" >
+    update t_price
+    set added = #{added,jdbcType=NUMERIC},
+      rebatetype = #{rebatetype,jdbcType=VARCHAR},
+      rebate = #{rebate,jdbcType=NUMERIC},
+      airewayid = #{airewayid,jdbcType=VARCHAR},
+      classtype = #{classtype,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

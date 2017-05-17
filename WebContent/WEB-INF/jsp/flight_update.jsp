@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/immune/update",
+	    	url : "${basePath}/flight/update",
        		type:'post',  
-       		data: $("#immuneForm").serialize(),
+       		data: $("#flightForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data>0) {
@@ -36,7 +36,7 @@
 		//initDictionarySelect("province", "#provinceCode",$("#provinceCodeDB").val());
 		 var option = $("option");
 		 for(var i = 0 ; i < option.length ; i ++){
-			  if("${immune.immunetype }" == option[i].value){
+			  if("${flight.flightmodel }" == option[i].value){
 				  option[i].selected = "selected";
 			  }
 			 	  
@@ -45,43 +45,43 @@
 </script>
 </head>
 <body> 
-	<form id="immuneForm" action="${basePath}/admin/SupplierServlet?flag=update" method="post">
-	<input type="hidden" value = "${immune.id }"  name = "id">
+	<form id="flightForm" action="${basePath}/admin/SupplierServlet?flag=update" method="post">
+	<input type="hidden" value = "${flight.id }"  name = "id">
 	  <table width="100%">
 	  	<tr>
-	  		<td>疫苗名称：</td>
+	  		<td>航班名称：</td>
 	  		<td>
-	  			<input type="text" name="immunename" size="14"  value="${immune.immunename }"/>
+	  			<input type="text" name="flight" size="14"  value="${flight.flight }"/>
 	  		</td>
 	  		
-	  		<td>疫苗类型：</td>
+	  		<td>航班型号：</td>
 	  		<td>
-	  			<select id="immunetype" name="immunetype"  >
+	  			<select id="flightmodel" name="flightmodel"  >
 	  				<option value="">----请选择----</option>
-	  				<option value="羊痘疫苗">羊痘疫苗</option>
-	  				<option value="口蹄疫疫苗">口蹄疫疫苗</option>
-	  				<option value="羊三联四防疫苗">羊三联四防疫苗</option>
+	  				<option value="波音737">波音747</option>
+	  				<option value="波音777">波音777</option>
+	  				<option value="空客A380">空客A380</option>
 	  			</select>
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td>羊群类型：</td>
+	  		<td>航班类型：</td>
 	  		<td>
-	  			<input type="text" name="sheeptype" size="14" value="${immune.sheeptype }" />
+	  			<input type="text" name="flighttype" size="14" value="${flight.flighttype }" />
 	  		</td>
-	  		<td>间隔时间（月）：</td>
+	  		<td>使用年限：</td>
 	  		<td>
-	  			<input type="text" id="intervals" name="intervals" size="14" value="${immune.intervals }" />
+	  			<input type="text" id="useage" name="useage" size="14" value="${flight.useage }" />
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td>是否必须：</td>
+	  		<td>商务舱规格：</td>
 	  		<td>
-	  			<input type="text" name="necessary" size="14" value="${immune.necessary }" />
+	  			<input type="text" name="business" size="14" value="${flight.business }" />
 	  		</td>
-	  		<td valign="top" colspan="">备注：</td>
+	  		<td>经济舱规格：</td>
 			<td >
-				<textarea rows="2" cols="18" name="remark" >${immune.remark }</textarea>
+				<input type="text" name="tourist" size="14" value="${flight.tourist }" />
 			</td>
 	  	</tr>
 	  </table>

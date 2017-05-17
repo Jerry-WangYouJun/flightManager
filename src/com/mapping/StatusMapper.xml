@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.StatusMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Status" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="flight" property="flight" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="pretime" property="pretime" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, flight, status, pretime, reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_status
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_status
+  </select>
+   <select id="selectStatusCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Status" >
+    select 
+    count(1)
+    from t_status where 1=1 
+    <if test="flight != null and flight != ''" >
+		 and flight like  CONCAT('%',#{flight},'%' )  
+      </if>
+      <if test="status != null and status != ''" >
+         and status like CONCAT('%',#{status},'%' )  
+      </if>
+      <if test="pretime != null and pretime != ''" >
+         and pretime like CONCAT('%',#{pretime},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectStatusByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Status" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_status where 1=1 
+   	  <if test="flight != null and flight != ''" >
+		 and flight like  CONCAT('%',#{flight},'%' )  
+      </if>
+      <if test="status != null and status != ''" >
+         and status like CONCAT('%',#{status},'%' )  
+      </if>
+      <if test="pretime != null and pretime != ''" >
+         and pretime like CONCAT('%',#{pretime},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_status
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Status" >
+    insert into t_status ( flight, status, 
+      pretime, reason
+      )
+    values ( #{flight,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{pretime,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Status" >
+    insert into t_status
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flight != null" >
+        flight,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="pretime != null" >
+        pretime,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flight != null" >
+        #{flight,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pretime != null" >
+        #{pretime,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Status" >
+    update t_status
+    <set >
+      <if test="flight != null" >
+        flight = #{flight,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="pretime != null" >
+        pretime = #{pretime,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Status" >
+    update t_status
+    set flight = #{flight,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      pretime = #{pretime,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

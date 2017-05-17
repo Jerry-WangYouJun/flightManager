@@ -4,12 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>供应商管理</title>
+<title>饲料管理</title>
 	<jsp:include page="/common.jsp"></jsp:include>
 	<script type="text/javascript">
 		$(function(){
 			$('#data-table').datagrid( {
-				url : '${basePath}/immune/query',
+				url : '${basePath}/company/query',
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
@@ -18,31 +18,30 @@
 				toolbar: [{
 					text:'添加',
 					iconCls: 'icon-add',
-					handler: function(){addImmune();}
+					handler: function(){addGoods();}
 				},'-',{
 					text:'修改',
 					iconCls: 'icon-edit',
-					handler: function(){updateImmune();}
+					handler: function(){updateGoods();}
 				},'-',{
 					text:'删除',
 					iconCls: 'icon-remove',
-					handler: function(){deleteImmune();}
+					handler: function(){deleteGoods();}
 				}],
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
-				    {field : 'immunename',title : '疫苗名称',halign:'center',width : 80},
-				    {field : 'sheeptype',title : '羊群类型',halign:'center',width : 80},
-				    {field : 'immunetype',title : '疫苗类型',halign:'center',width : 180}, 
-				    {field : 'intervals',title : '用药间隔',halign:'center',width : 120},
-				    {field : 'necessary',title : '是否必须',halign:'center',width : 80},
-				    {field : 'remark',title : '备注',halign:'center',width : 200}
+				    {field : 'company',title : '航班编号',halign:'center',width : 120},
+				    {field : 'country',title : '购票时间',halign:'center',width : 150},
+				    {field : 'flights',title : '订单号',halign:'center',width : 80},
+				    {field : 'airways',title : '票价',halign:'center',width : 80}, 
+				    {field : 'scope',title : '状态',halign:'center',width : 80},
 				]]
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '供应商管理',
+				title : '航线管理',
 				width :  900,
-				height : 320,
+				height : 400,
 				top:50,
 				left:100,
 				closed : true,
@@ -64,45 +63,46 @@
 					}
 				} ]
 			});
-			
-			//initDictionarySelect("province", "#search-provinceCode");
 		});
 		
 		function doSearch(){
-			var immunename = $("#search-immunename").val();
-			var immunetype = $("#search-immunetype").val();
+			var company = $("#company").val();
 			$('#data-table').datagrid('reload',{
-				immunename:immunename,immunetype:immunetype
+				company:company
 			} );
 		}
 		function doClear(){
-			$("#search-immunetype").val("");
-			$("#search-immunename").val("");
+			$("#company").val("");
+			$("#country").val("");
+			$("#flights").val("");
+			$("#airways").val("");
+			$("#scope").combo("setText","");
+			$("#scope").combo("setValue","");
 		}
-		function addImmune(){
-			var path = "${basePath}/init/immune_add";
+		function addGoods(){
+			var path = "${basePath}/init/company_add";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
 		
-		function updateImmune(){
+		function updateGoods(){
 			var obj = $('#data-table').datagrid('getSelected');
 			if (obj == null || obj.id == null) {
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}		
-			var path = "${basePath}/immune/updateinit?id=" + obj.id;
+			var path = "${basePath}/company/updateinit?id=" + obj.id;
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
 		
-		function deleteImmune(){
+		function deleteGoods(){
 			var obj = $('#data-table').datagrid('getSelected');
 			if (obj == null || obj.id == null) {
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}	
-			var url = "${basePath}/immune/delete" ;
+			var url = "${basePath}/company/delete";
 			$.ajax( {
 				url : url,
 				type : 'post',
@@ -120,27 +120,26 @@
 			});
 		}
 	</script>
-
 </head>
 <body>
-	<div id="tb" title="查询条件区" class="easyui-panel" style="padding:3px;width:85%" iconCls="icon-search">
-		<span>疫苗名称:</span>
-		<input id="search-immunename" name="immunename"/>
-		<span>所在地:</span>
-		<select id="search-immunetype" name="immunetype">
-	  				<option value="">----请选择----</option>
-	  				<option value="羊痘疫苗">羊痘疫苗</option>
-	  				<option value="口蹄疫疫苗">口蹄疫疫苗</option>
-	  				<option value="羊三联四防疫苗">羊三联四防疫苗</option>
-		</select> 
-		<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
-		<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-clear" onclick="doClear()">清除</a>
+	<div id="tb" title="查询条件区" class="easyui-panel"  style="padding:3px;width:85%" iconCls="icon-search">
+		<table align="left">
+			<tr>
+				<td><span>折扣类型:</span></td>
+				<td><input id="company" name="company"/></td>
+				<td>
+					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
+				</td>
+				<td>
+					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-clear" onclick="doClear()">清除</a>
+				</td>
+			</tr>
+		</table>
 	</div>
-	<table id="data-table" style="height:510px" title="数据列表" width="85%"></table>
+	<table id="data-table"  style="height:490px" title="数据列表" width="85%"></table>
 	<div id="dlg-frame">
-		<iframe width="99%" height="98%" name="frameContent" id="frameContent"
+		<iframe width="99%" height="90%" name="frameContent" id="frameContent"
 			frameborder="0"></iframe>
 	</div>
-	
-</body>
+	</body>
 </html>
