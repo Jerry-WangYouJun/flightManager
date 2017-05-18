@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserServiceI {
 	public int inserUser(User user) {
 		// TODO Auto-generated method stub
 		user.setPwd("123");
-		user.setRoleid(1);
 		return this.userDao.insert(user);
 	}
 
