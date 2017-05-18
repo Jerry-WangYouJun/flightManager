@@ -5,7 +5,7 @@ public class Price {
 	 private double added ; 
 	 private String rebatetype ; 
 	 private double rebate ;
-	 private String airewayid ; 
+	 private String flight ; 
 	 private String classtype ;
 	public int getId() {
 		return id;
@@ -31,11 +31,11 @@ public class Price {
 	public void setRebate(double rebate) {
 		this.rebate = rebate;
 	}
-	public String getAirewayid() {
-		return airewayid;
+	public String getFlight() {
+		return flight;
 	}
-	public void setAirewayid(String airewayid) {
-		this.airewayid = airewayid;
+	public void setFlight(String flight) {
+		this.flight = flight;
 	}
 	public String getClasstype() {
 		return classtype;

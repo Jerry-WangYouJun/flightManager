@@ -6,11 +6,11 @@
     <result column="added" property="added" jdbcType="NUMERIC" />
     <result column="rebatetype" property="rebatetype" jdbcType="VARCHAR" />
     <result column="rebate" property="rebate" jdbcType="NUMERIC" />
-    <result column="airewayid" property="airewayid" jdbcType="VARCHAR" />
+    <result column="flight" property="flight" jdbcType="VARCHAR" />
     <result column="classtype" property="classtype" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, added, rebatetype, rebate, airewayid, classtype
+    ID, added, rebatetype, rebate, flight, classtype
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -46,10 +46,10 @@
   </delete>
   <insert id="insert" parameterType="com.pojo.Price" >
     insert into t_price ( added, rebatetype, 
-      rebate, airewayid, classtype
+      rebate, flight, classtype
       )
     values ( #{added,jdbcType=NUMERIC}, #{rebatetype,jdbcType=VARCHAR}, 
-      #{rebate,jdbcType=NUMERIC}, #{airewayid,jdbcType=VARCHAR}, #{classtype,jdbcType=VARCHAR}
+      #{rebate,jdbcType=NUMERIC}, #{flight,jdbcType=VARCHAR}, #{classtype,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Price" >
@@ -64,8 +64,8 @@
       <if test="rebate != null" >
         rebate,
       </if>
-      <if test="airewayid != null" >
-        airewayid,
+      <if test="flight != null" >
+        flight,
       </if>
         <if test="classtype != null" >
         classtype,
@@ -81,8 +81,8 @@
       <if test="rebate != null" >
         #{rebate,jdbcType=NUMERIC},
       </if>
-      <if test="airewayid != null" >
-        #{airewayid,jdbcType=VARCHAR},
+      <if test="flight != null" >
+        #{flight,jdbcType=VARCHAR},
       </if>
       <if test="classtype != null" >
         #{classtype,jdbcType=VARCHAR},
@@ -101,8 +101,8 @@
       <if test="rebate != null" >
         rebate = #{rebate,jdbcType=NUMERIC},
       </if>
-      <if test="airewayid != null" >
-        airewayid = #{airewayid,jdbcType=VARCHAR},
+      <if test="flight != null" >
+        flight = #{flight,jdbcType=VARCHAR},
       </if>
       <if test="classtype != null" >
         classtype = #{classtype,jdbcType=VARCHAR},
@@ -115,7 +115,7 @@
     set added = #{added,jdbcType=NUMERIC},
       rebatetype = #{rebatetype,jdbcType=VARCHAR},
       rebate = #{rebate,jdbcType=NUMERIC},
-      airewayid = #{airewayid,jdbcType=VARCHAR},
+      flight = #{flight,jdbcType=VARCHAR},
       classtype = #{classtype,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>

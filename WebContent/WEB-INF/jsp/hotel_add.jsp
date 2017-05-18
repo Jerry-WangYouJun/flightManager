@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/remind/insert",
+	    	url : "${basePath}/hotel/insert",
        		type:'post',  
-       		data: $("#remindForm").serialize(),
+       		data: $("#hotelForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data>0) {
@@ -39,47 +39,37 @@
 </script>
 </head>
 <body>
-	<form id="remindForm" action="${basePath}/admin/SupplierServlet?flag=insert" method="post">
+	<form id="hotelForm" action="${basePath}/admin/SupplierServlet?flag=insert" method="post">
 	  <table width="100%">
 	  	<tr>
-	  		<td>羊群：</td>
+	  		<td>酒店名称：</td>
 	  		<td>
-	  			<input type="text" name="sheep" size="14" />
+	  			<input type="text" name="hotel" size="14" />
 	  		</td>
 	  		
-	  		<td>提醒方式：</td>
+	  		<td>星级：</td>
 	  		<td>
-	  			<select id="remindtype" name="remindtype" >
-	  				<option value="">----请选择----</option>
-	  				<option value="邮件">邮件</option>
-	  				<option value="短信">短信</option>
-	  				<option value="微信">微信</option>
-	  			</select>
+	  			<input type="text" name="stars"  />
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td>提醒时间：</td>
+	  		<td>剩余房间：</td>
 	  		<td>
-	  			<input type="text" name="remind" class="easyui-datebox" />
+	  			<input type="text" name="rest"  />
 	  		</td>
-	  		<td>上次接种时间：</td>
+	  		<td>地址：</td>
 	  		<td>
-	  			<input type="text" id="lastdate" class="easyui-datebox" name="lastdate"  />
+	  			<input type="text" id="address"  name="address"  />
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td>疫苗名称：</td>
+	  		<td>房间数：</td>
 	  		<td>
-	  			<select  name = "immuneid"  id ="immuneid" >
-	  				  	 <option>---请选择---</option>
-	  				  	 <c:forEach items="${immunelist }" var="immune">
-	  				  	 	 <option value = '${immune.immunename }'>${ immune.immunename}</option>
-	  				  	 </c:forEach>
-	  			</select>
+	  			<input type="text" id="rooms"  name="rooms"  />
 	  		</td>
-	  		<td valign="top" colspan="">备注：</td>
+	  		<td >电话：</td>
 			<td >
-				<textarea rows="2" cols="18" name="remark"></textarea>
+				<input type="text" id="phone"  name="phone" />
 			</td>
 	  	</tr>
 	  </table>

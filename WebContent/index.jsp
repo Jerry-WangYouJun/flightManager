@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>羊场只能管理首页</title>
+    <title>航班查询系统</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -27,62 +27,62 @@
 		
 		$(function(){
 			var treeData = [{
-				text:"饲料管理",
+				text:"航班管理",
 				children:[{
-					text:"饲料库存查询",
+					text:"航班管理",
 					attributes:{
-						url:"${basePath}/inventory/list"
+						url:"${basePath}/init/flight_list"
 					}
 				},{
-					text:"饲料入库管理",
+					text:"航线管理",
 					attributes:{
-						url:"${basePath}/instock/list"
+						url:"${basePath}/init/airway_list"
 					}
 				},{
-					text:"饲料出库管理",
+					text:"航班动态管理",
 					attributes:{
-						url:"${basePath}/outstock/list"
-					}
-				},{
-					text:"饲料名称设置",
-					attributes:{
-						url:"${basePath}/init/goods_list"
+						url:"${basePath}/init/status_list"
 					}
 				}]
 			},{
-				text:"羊场基础信息管理",	
+				text:"机场服务",	
 				children:[{
-					text:"员工管理",
+					text:"机场巴士",
 					attributes:{
-						url:"${basePath}/init/user_list"
+						url:"${basePath}/init/bus_list"
 					}
 				},{
-					text:"牧场管理",
+					text:"VIP乘客",
 					attributes:{
-						url:"${basePath}/init/dept_list"
+						url:"${basePath}/init/passenger_list"
 					}
 				},{
-					text:"饲料仓库管理",
+					text:"机场酒店",
 					attributes:{
-						url:"${basePath}/init/stock_list"
-					}
-				},{
-					text:"饲料供应商管理",
-					attributes:{
-						url:"${basePath}/init/supplier_list"
+						url:"${basePath}/init/hotel_list"
 					}
 				}]
 			},{
 				text:"系统设置",	
 				children:[{
-					text:"免疫保健设置",
+					text:"票价管理",
 					attributes:{
-						url:"${basePath}/init/immune_list"
+						url:"${basePath}/init/price_list"
 					}
 				},{
-					text:"免疫保健提醒设置",
+					text:"航空公司信息",
 					attributes:{
-						url:"${basePath}/init/remind_list"
+						url:"${basePath}/init/company_list"
+					}
+				},{
+					text:"机场信息",
+					attributes:{
+						url:"${basePath}/init/airport_list"
+					}
+				},{
+					text:"管理员设置",
+					attributes:{
+						url:"${basePath}/init/user_list"
 					}
 				}]
 			}];
@@ -126,7 +126,7 @@
 		<table width="100%">
 			<tr>
 				<td align="center" style="padding-top: 20px;"> 
-					<font color="white" style="font-family: STHupo;font-size: 80px">羊场智能管理系统</font>
+					<font color="white" style="font-family: STHupo;font-size: 80px">航班信息管理系统</font>
 				</td>
 			</tr>
 			<tr>
@@ -152,11 +152,8 @@
 	
 	<div region="center" class="easyui-tabs" fit="true" border="false" id="tabs">
 		<div title="首页" >
-			<div align="center" style="padding-top: 100px;"><font color="red" size="10">欢迎使用羊场智能管理系统</font></div>		
+			<div align="center" style="padding-top: 100px;"><font color="red" size="10">航班信息管理系统</font></div>		
 		</div>
-	</div>
-	<div region="south" style="height:25px;background-color:#13A7D5;" align="center"  >
-		<font color="#ffffff"> 版权所有:yangjx@121ugrow.com&copy;英谷教育</font>
 	</div>
 </body>
 </html>

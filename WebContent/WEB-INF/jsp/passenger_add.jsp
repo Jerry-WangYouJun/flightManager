@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/company/insert",
+	    	url : "${basePath}/passenger/insert",
        		type:'post',  
-       		data: $("#companyForm").serialize(),
+       		data: $("#passengerForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data>0) {
@@ -37,31 +37,31 @@
 </script>
 </head>
 <body>
-	<form id="companyForm" action="" method="post">
+	<form id="passengerForm" action="" method="post">
 	  <table width="100%">
 	  	<tr>
-	  		<td>航空公司：</td>
+	  		<td>巴士号：</td>
 	  		<td>
-	  			<input type="text" id = "company" name="company" size="14" />
+	  			<input type="text" id = "passenger" name="passenger" size="14" />
 	  		</td>
-	  		<td>所属国：</td>
+	  		<td>机场：</td>
 	  		<td>
-	  			<input type="text" id = "country" name="country" size="14" />
+	  			<input type="text" id = "idcard" name="idcard" size="14" />
 	  		</td>
-	  		<td>航班数：</td>
+	  		<td>起点：</td>
 	  		<td>
-	  			<input type="text" id = "flights" name="flights" size="14" />
+	  			<input type="text" id = "telephone" name="telephone" size="14" />
 	  		</td>
 	  	</tr>
 	  	
 	  	<tr>
-	  		<td>航线数：</td>
+	  		<td>紧急联系人：</td>
 	  		<td>
-	  			<input type="text" id="airways" name="airways" size="14"  />
+	  			<input type="text" id="linkman" name="linkman" size="14"  />
 	  		</td>
-	  		<td>范围：</td>
+	  		<td>紧急联系人电话：</td>
 	  		<td>
-	  			<input type="text" id="scope" name="scope" size="14"  />
+	  			<input type="text" id="linkphone" name="linkphone" size="14"  />
 	  		</td>
 	  	</tr>
 	  </table>

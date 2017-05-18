@@ -55,9 +55,9 @@
 	  	</tr>
 	  	
 	  	<tr>
-	  		<td>航线：</td>
+	  		<td>航班：</td>
 	  		<td>
-	  			<input type="text" id="airewayid" name="airewayid" size="14"  />
+	  			<input type="text" id="flight" name="flight" size="14"  />
 	  		</td>
 	  		<td>舱位：</td>
 	  		<td>

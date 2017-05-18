@@ -53,26 +53,26 @@
 	    <input type="hidden" value="${company.id }" name = "id">
 	 <table width="100%">
 	  	<tr>
-	  		<td>原价：</td>
+	  		<td>航空公司：</td>
 	  		<td>
 	  			<input type="text" id = "company" name="company" size="14"value="${company.company }"  />
 	  		</td>
-	  		<td>折扣类型：</td>
+	  		<td>所属国：</td>
 	  		<td>
 	  			<input type="text" id = "country" name="country" size="14" value="${company.country }"/>
 	  		</td>
-	  		<td>折扣：</td>
+	  		<td>航班数：</td>
 	  		<td>
 	  			<input type="text" id = "flights" name="flights" size="14" value="${company.flights }"/>
 	  		</td>
 	  	</tr>
 	  	
 	  	<tr>
-	  		<td>航线：</td>
+	  		<td>航线数：</td>
 	  		<td>
 	  			<input type="text" id="airways" name="airways" size="14" value="${company.airways }" />
 	  		</td>
-	  		<td>舱位：</td>
+	  		<td>范围：</td>
 	  		<td>
 	  			<input type="text" id="scope" name="scope" size="14" value="${company.scope }" />
 	  		</td>

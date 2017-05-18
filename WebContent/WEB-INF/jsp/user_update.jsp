@@ -65,21 +65,12 @@
 		  		<td>
 		  			<form:input id="userNo" path="userno" />
 		  		</td>
-		  		<td>籍贯：</td>
-		  		<td>
-		  			<form:select id="hometown" path="hometown" items="${requestScope.provinces }" itemLabel="dicvalue" itemValue="diccode" >
-		  			</form:select>
-		  		</td>
-		  		<td>所在部门：</td>
-		  		<td>
-		  			<form:select id="deptNo" path="deptid" items="${requestScope.depts }" itemLabel="deptname" itemValue="id"></form:select>
-		  		</td>
-		  	</tr>
-		  	<tr>
 		  		<td>姓名：</td>
 		  		<td>
 		  			<form:input id="userName" path="username" />
 		  		</td>
+		  	</tr>
+		  	<tr>
 		  		<td>手机号：</td>
 		  		<td>
 		  			<form:input id="telphone" path="telphone" />
@@ -92,11 +83,11 @@
 		  	<tr>
 		  		<td>性别：</td>
 		  		<td>
-		  			<form:radiobuttons path="sex" items="${requestScope.sexs }"  itemLabel="dicvalue" itemValue="diccode" />
-		  		</td>
-		  		<td>年龄：</td>
-		  		<td>
-		  			<form:input path="age" />
+		  			<select id="sex" name="sex">
+		  				<option value="">---请选择---</option>
+		  				<option value="0">男</option>
+	  					<option value="1">女</option>
+	  				</select>
 		  		</td>
 		  		<td>岗位：</td>
 		  		<td>

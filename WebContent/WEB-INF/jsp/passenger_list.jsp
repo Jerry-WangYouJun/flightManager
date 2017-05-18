@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$('#data-table').datagrid( {
-				url : '${basePath}/price/query',
+				url : '${basePath}/bus/query',
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
@@ -30,11 +30,11 @@
 				}],
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
-				    {field : 'added',title : '原价',halign:'center',width : 120},
-				    {field : 'rebatetype',title : '折扣类型',halign:'center',width : 150},
-				    {field : 'rebate',title : '折扣',halign:'center',width : 80},
-				    {field : 'flight',title : '航线',halign:'center',width : 80}, 
-				    {field : 'classtype',title : '舱位',halign:'center',width : 80},
+				    {field : 'bus',title : '巴士号',halign:'center',width : 120},
+				    {field : 'airport',title : '机场',halign:'center',width : 150},
+				    {field : 'startpoint',title : '起点',halign:'center',width : 80},
+				    {field : 'endpoint',title : '终点',halign:'center',width : 80}, 
+				    {field : 'times',title : '用时',halign:'center',width : 80},
 				]]
 			});
 			
@@ -66,26 +66,26 @@
 		});
 		
 		function doSearch(){
-			var added = $("#added").val();
-			var rebatetype = $("#rebatetype").val();
-			var rebate = $("#rebate").val();
-			var flight = $("#flight").val();
-			var classtype = $("#classtype").val();
+			var bus = $("#bus").val();
+			var airport = $("#airport").val();
+			var startpoint = $("#startpoint").val();
+			var endpoint = $("#endpoint").val();
+			var times = $("#times").val();
 			$('#data-table').datagrid('reload',{
-				added:added,rebatetype:rebatetype,rebate:rebate,
-				flight:flight,classtype:classtype
+				bus:bus,airport:airport,startpoint:startpoint,
+				endpoint:endpoint,times:times
 			} );
 		}
 		function doClear(){
-			$("#added").val("");
-			$("#rebatetype").val("");
-			$("#rebate").val("");
-			$("#flight").val("");
-			$("#classtype").combo("setText","");
-			$("#classtype").combo("setValue","");
+			$("#bus").val("");
+			$("#airport").val("");
+			$("#startpoint").val("");
+			$("#endpoint").val("");
+			$("#times").combo("setText","");
+			$("#times").combo("setValue","");
 		}
 		function addGoods(){
-			var path = "${basePath}/init/price_add";
+			var path = "${basePath}/init/bus_add";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
@@ -96,7 +96,7 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}		
-			var path = "${basePath}/price/updateinit?id=" + obj.id;
+			var path = "${basePath}/bus/updateinit?id=" + obj.id;
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
@@ -107,7 +107,7 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}	
-			var url = "${basePath}/price/delete";
+			var url = "${basePath}/bus/delete";
 			$.ajax( {
 				url : url,
 				type : 'post',
@@ -131,7 +131,7 @@
 		<table align="left">
 			<tr>
 				<td><span>折扣类型:</span></td>
-				<td><input id="rebatetype" name="rebatetype"/></td>
+				<td><input id="airport" name="airport"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
 				</td>

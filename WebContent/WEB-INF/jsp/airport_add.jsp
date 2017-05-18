@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="/common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>航线添加页面</title>
-	<jsp:include page="/common.jsp"></jsp:include>
+<title>供应商添加页面</title>
 	<style type="text/css">
 		table{
 			font-size:12px;
@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/company/insert",
+	    	url : "${basePath}/airport/insert",
        		type:'post',  
-       		data: $("#companyForm").serialize(),
+       		data: $("#airportForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data>0) {
@@ -32,37 +32,44 @@
         	} 
        	});
 	}
+	
 	$(function(){
 	});
 </script>
 </head>
 <body>
-	<form id="companyForm" action="" method="post">
+	<form id="airportForm" action="${basePath}/admin/SupplierServlet?flag=insert" method="post">
 	  <table width="100%">
 	  	<tr>
-	  		<td>航空公司：</td>
+	  		<td>机场名：</td>
 	  		<td>
-	  			<input type="text" id = "company" name="company" size="14" />
+	  			<input type="text" name="airport" size="14" />
 	  		</td>
-	  		<td>所属国：</td>
+	  		
+	  		<td>军民用：</td>
 	  		<td>
-	  			<input type="text" id = "country" name="country" size="14" />
-	  		</td>
-	  		<td>航班数：</td>
-	  		<td>
-	  			<input type="text" id = "flights" name="flights" size="14" />
+	  			<input type="text" name="level"  />
 	  		</td>
 	  	</tr>
-	  	
 	  	<tr>
-	  		<td>航线数：</td>
+	  		<td>航站楼：</td>
 	  		<td>
-	  			<input type="text" id="airways" name="airways" size="14"  />
+	  			<input type="text" name="towers"  />
 	  		</td>
-	  		<td>范围：</td>
+	  		<td>地址：</td>
 	  		<td>
-	  			<input type="text" id="scope" name="scope" size="14"  />
+	  			<input type="text" id="address"  name="address"  />
 	  		</td>
+	  	</tr>
+	  	<tr>
+	  		<td>起落范围：</td>
+	  		<td>
+	  			<input type="text" id="scope"  name="scope"  />
+	  		</td>
+	  		<td >跑道数：</td>
+			<td >
+				<input type="text" id="runway"  name="runway" />
+			</td>
 	  	</tr>
 	  </table>
   </form>

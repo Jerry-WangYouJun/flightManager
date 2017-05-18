@@ -20,11 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.core.model.Grid;
 import com.github.pagehelper.PageHelper;
-import com.pojo.Department;
-import com.pojo.Dictionary;
 import com.pojo.User;
-import com.service.DepartmentServiceI;
-import com.service.DictionaryServiceI;
 import com.service.UserServiceI;
 
 @Controller
@@ -32,12 +28,6 @@ import com.service.UserServiceI;
 public class UserController {
 	@Resource(name="userServiceImpl")
 	private UserServiceI userService;
-	
-	@Resource(name="departmentServiceImpl")
-	private DepartmentServiceI deptService;
-
-	@Resource(name="dictionaryServiceImpl")
-	private DictionaryServiceI dictionaryService;
 	
 	@RequestMapping("/checkUser")
 	public void checkUser(HttpServletRequest request,HttpServletResponse response) {
@@ -101,16 +91,7 @@ public class UserController {
 	
 	@RequestMapping("/user_input")
 	public String addInput(Map<String, Object> map){
-		//初始化 籍贯
-		List<Dictionary> provinces = this.dictionaryService.findDicMaps("province");
-		//初始化 部门
-		List<Department> depts = this.deptService.findDeptSelect();
-		//初始化性别
-		List<Dictionary> sexs = this.dictionaryService.findDicMaps("sex");
 		map.put("user", new User());
-		map.put("provinces", provinces);
-		map.put("sexs", sexs);
-		map.put("depts", depts);
 		return "user_add";
 	}
 	
@@ -132,17 +113,7 @@ public class UserController {
 	@RequestMapping(value="user_update_input/{id}",method=RequestMethod.GET)
 	public String updateInput(@PathVariable("id") Integer id,Map<String, Object> map){
 		User user = this.userService.getUserById(id);
-		
-		//初始化 籍贯
-		List<Dictionary> provinces = this.dictionaryService.findDicMaps("province");
-		//初始化 部门
-		List<Department> depts = this.deptService.findDeptSelect();
-		//初始化性别
-		List<Dictionary> sexs = this.dictionaryService.findDicMaps("sex");
 		map.put("user", user);
-		map.put("provinces", provinces);
-		map.put("sexs", sexs);
-		map.put("depts", depts);
 		return "user_update";
 	}
 	

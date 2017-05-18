@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/price/update",
+	    	url : "${basePath}/bus/update",
        		type:'post',  
-       		data: $("#priceForm").serialize(),
+       		data: $("#busForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data > 0) {
@@ -49,32 +49,32 @@
 </script>
 </head>
 <body>
-	<form id="priceForm" action="" method="post">
-	    <input type="hidden" value="${price.id }" name = "id">
+	<form id="busForm" action="" method="post">
+	    <input type="hidden" value="${bus.id }" name = "id">
 	 <table width="100%">
 	  	<tr>
-	  		<td>原价：</td>
+	  		<td>巴士号：</td>
 	  		<td>
-	  			<input type="text" id = "added" name="added" size="14"value="${price.added }"  />
+	  			<input type="text" id = "bus" name="bus" size="14"value="${bus.bus }"  />
 	  		</td>
-	  		<td>折扣类型：</td>
+	  		<td>机场：</td>
 	  		<td>
-	  			<input type="text" id = "rebatetype" name="rebatetype" size="14" value="${price.rebatetype }"/>
+	  			<input type="text" id = "airport" name="airport" size="14" value="${bus.airport }"/>
 	  		</td>
-	  		<td>折扣：</td>
+	  		<td>出发点：</td>
 	  		<td>
-	  			<input type="text" id = "rebate" name="rebate" size="14" value="${price.rebate }"/>
+	  			<input type="text" id = "startpoint" name="startpoint" size="14" value="${bus.startpoint }"/>
 	  		</td>
 	  	</tr>
 	  	
 	  	<tr>
-	  		<td>航班：</td>
+	  		<td>目的地：</td>
 	  		<td>
-	  			<input type="text" id="flight" name="flight" size="14" value="${price.flight }" />
+	  			<input type="text" id="endpoint" name="endpoint" size="14" value="${bus.endpoint }" />
 	  		</td>
-	  		<td>舱位：</td>
+	  		<td>用时（分）：</td>
 	  		<td>
-	  			<input type="text" id="classtype" name="classtype" size="14" value="${price.classtype }" />
+	  			<input type="text" id="times" name="times" size="14" value="${bus.times }" />
 	  		</td>
 	  	</tr>
 	  </table>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.BusMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Bus" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="bus" property="bus" jdbcType="NUMERIC" />
+    <result column="airport" property="airport" jdbcType="VARCHAR" />
+    <result column="startpoint" property="startpoint" jdbcType="NUMERIC" />
+    <result column="endpoint" property="endpoint" jdbcType="VARCHAR" />
+    <result column="times" property="times" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, bus, airport, startpoint, endpoint, times
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bus
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bus
+  </select>
+   <select id="selectBusCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Bus" >
+    select 
+    count(1)
+    from t_bus where 1=1 
+      <if test="airport != null and airport != ''" >
+         and airport like CONCAT('%',#{airport},'%' )  
+      </if>
+  </select>
+  
+  <select id="selectBusByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Bus" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bus where 1=1 
+      <if test="airport != null and airport != ''" >
+         and airport like CONCAT('%',#{airport},'%' )  
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_bus
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Bus" >
+    insert into t_bus ( bus, airport, 
+      startpoint, endpoint, times
+      )
+    values ( #{bus,jdbcType=NUMERIC}, #{airport,jdbcType=VARCHAR}, 
+      #{startpoint,jdbcType=NUMERIC}, #{endpoint,jdbcType=VARCHAR}, #{times,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Bus" >
+    insert into t_bus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bus != null" >
+        bus,
+      </if>
+      <if test="airport != null" >
+        airport,
+      </if>
+      <if test="startpoint != null" >
+        startpoint,
+      </if>
+      <if test="endpoint != null" >
+        endpoint,
+      </if>
+        <if test="times != null" >
+        times,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bus != null" >
+        #{bus,jdbcType=NUMERIC},
+      </if>
+      <if test="airport != null" >
+        #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="startpoint != null" >
+        #{startpoint,jdbcType=NUMERIC},
+      </if>
+      <if test="endpoint != null" >
+        #{endpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="times != null" >
+        #{times,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Bus" >
+    update t_bus
+    <set >
+      <if test="bus != null" >
+        bus = #{bus,jdbcType=NUMERIC},
+      </if>
+      <if test="airport != null" >
+        airport = #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="startpoint != null" >
+        startpoint = #{startpoint,jdbcType=NUMERIC},
+      </if>
+      <if test="endpoint != null" >
+        endpoint = #{endpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="times != null" >
+        times = #{times,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Bus" >
+    update t_bus
+    set bus = #{bus,jdbcType=NUMERIC},
+      airport = #{airport,jdbcType=VARCHAR},
+      startpoint = #{startpoint,jdbcType=NUMERIC},
+      endpoint = #{endpoint,jdbcType=VARCHAR},
+      times = #{times,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

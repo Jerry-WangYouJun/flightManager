@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.AirportMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Airport" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="towers" property="towers" jdbcType="INTEGER" />
+    <result column="airport" property="airport" jdbcType="VARCHAR" />
+    <result column="scope" property="scope" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="runway" property="runway" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, towers, airport, scope, level, address, runway
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_airport
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_airport
+  </select>
+   <select id="selectAirportCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Airport" >
+    select 
+    count(1)
+    from t_airport where 1=1 
+      <if test="airport != null and airport != ''" >
+         and airport like CONCAT('%',#{airport},'%' )  
+      </if>
+      <if test="address != null and scope != ''" >
+         and address like CONCAT('%',#{address},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectAirportByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Airport" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_airport where 1=1 
+      <if test="airport != null and airport != ''" >
+         and airport like CONCAT('%',#{airport},'%' )  
+      </if>
+      <if test="address != null and scope != ''" >
+         and address like CONCAT('%',#{address},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_airport
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Airport" >
+    insert into t_airport ( towers, airport, 
+      scope, level, address ,runway
+      )
+    values ( #{towers,jdbcType=INTEGER}, #{airport,jdbcType=VARCHAR}, 
+      #{scope,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{runway,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Airport" >
+    insert into t_airport
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="towers != null" >
+        towers,
+      </if>
+      <if test="airport != null" >
+        airport,
+      </if>
+      <if test="scope != null" >
+        scope,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+        <if test="address != null" >
+        address,
+      </if>
+      <if test="runway != null" >
+        runway,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="towers != null" >
+        #{towers,jdbcType=INTEGER},
+      </if>
+      <if test="airport != null" >
+        #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null" >
+        #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="runway != null" >
+        #{runway,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Airport" >
+    update t_airport
+    <set >
+      <if test="towers != null" >
+        towers = #{towers,jdbcType=INTEGER},
+      </if>
+      <if test="airport != null" >
+        airport = #{airport,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null" >
+        scope = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="runway != null" >
+        runway = #{runway,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Airport" >
+    update t_airport
+    set towers = #{towers,jdbcType=INTEGER},
+      airport = #{airport,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      runway = #{runway,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

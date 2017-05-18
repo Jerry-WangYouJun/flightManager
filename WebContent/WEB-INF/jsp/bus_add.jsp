@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/company/insert",
+	    	url : "${basePath}/bus/insert",
        		type:'post',  
-       		data: $("#companyForm").serialize(),
+       		data: $("#busForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data>0) {
@@ -37,31 +37,31 @@
 </script>
 </head>
 <body>
-	<form id="companyForm" action="" method="post">
+	<form id="busForm" action="" method="post">
 	  <table width="100%">
 	  	<tr>
-	  		<td>航空公司：</td>
+	  		<td>巴士号：</td>
 	  		<td>
-	  			<input type="text" id = "company" name="company" size="14" />
+	  			<input type="text" id = "bus" name="bus" size="14" />
 	  		</td>
-	  		<td>所属国：</td>
+	  		<td>机场：</td>
 	  		<td>
-	  			<input type="text" id = "country" name="country" size="14" />
+	  			<input type="text" id = "airport" name="airport" size="14" />
 	  		</td>
-	  		<td>航班数：</td>
+	  		<td>起点：</td>
 	  		<td>
-	  			<input type="text" id = "flights" name="flights" size="14" />
+	  			<input type="text" id = "startpoint" name="startpoint" size="14" />
 	  		</td>
 	  	</tr>
 	  	
 	  	<tr>
-	  		<td>航线数：</td>
+	  		<td>终点：</td>
 	  		<td>
-	  			<input type="text" id="airways" name="airways" size="14"  />
+	  			<input type="text" id="endpoint" name="endpoint" size="14"  />
 	  		</td>
-	  		<td>范围：</td>
+	  		<td>用时：</td>
 	  		<td>
-	  			<input type="text" id="scope" name="scope" size="14"  />
+	  			<input type="text" id="times" name="times" size="14"  />
 	  		</td>
 	  	</tr>
 	  </table>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapping.HotelMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Hotel" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="rooms" property="rooms" jdbcType="INTEGER" />
+    <result column="hotel" property="hotel" jdbcType="VARCHAR" />
+    <result column="stars" property="stars" jdbcType="VARCHAR" />
+    <result column="rest" property="rest" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, rooms, hotel, stars, rest, address, phone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_hotel
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_hotel
+  </select>
+   <select id="selectHotelCountByWhere" resultType="java.lang.Long" parameterType="com.pojo.Hotel" >
+    select 
+    count(1)
+    from t_hotel where 1=1 
+      <if test="hotel != null and hotel != ''" >
+         and hotel like CONCAT('%',#{hotel},'%' )  
+      </if>
+      <if test="address != null and stars != ''" >
+         and address like CONCAT('%',#{address},'%' )  
+       </if>
+  </select>
+  
+  <select id="selectHotelByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Hotel" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_hotel where 1=1 
+      <if test="hotel != null and hotel != ''" >
+         and hotel like CONCAT('%',#{hotel},'%' )  
+      </if>
+      <if test="address != null and stars != ''" >
+         and address like CONCAT('%',#{address},'%' )  
+       </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_hotel
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Hotel" >
+    insert into t_hotel ( rooms, hotel, 
+      stars, rest, address ,phone
+      )
+    values ( #{rooms,jdbcType=VARCHAR}, #{hotel,jdbcType=VARCHAR}, 
+      #{stars,jdbcType=VARCHAR}, #{rest,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Hotel" >
+    insert into t_hotel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rooms != null" >
+        rooms,
+      </if>
+      <if test="hotel != null" >
+        hotel,
+      </if>
+      <if test="stars != null" >
+        stars,
+      </if>
+      <if test="rest != null" >
+        rest,
+      </if>
+        <if test="address != null" >
+        address,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rooms != null" >
+        #{rooms,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel != null" >
+        #{hotel,jdbcType=VARCHAR},
+      </if>
+      <if test="stars != null" >
+        #{stars,jdbcType=VARCHAR},
+      </if>
+      <if test="rest != null" >
+        #{rest,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Hotel" >
+    update t_hotel
+    <set >
+      <if test="rooms != null" >
+        rooms = #{rooms,jdbcType=VARCHAR},
+      </if>
+      <if test="hotel != null" >
+        hotel = #{hotel,jdbcType=VARCHAR},
+      </if>
+      <if test="stars != null" >
+        stars = #{stars,jdbcType=VARCHAR},
+      </if>
+      <if test="rest != null" >
+        rest = #{rest,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Hotel" >
+    update t_hotel
+    set rooms = #{rooms,jdbcType=VARCHAR},
+      hotel = #{hotel,jdbcType=VARCHAR},
+      stars = #{stars,jdbcType=VARCHAR},
+      rest = #{rest,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

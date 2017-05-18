@@ -3,11 +3,7 @@ package com.pojo;
 public class User {
     private Integer id;
 
-    private String age;
-
     private String email;
-
-    private String hometown;
 
     private String position;
 
@@ -23,9 +19,6 @@ public class User {
 
     private String userno;
 
-    private Integer deptid;
-
-    private Integer roleid;
 
     public Integer getId() {
         return id;
@@ -35,13 +28,6 @@ public class User {
         this.id = id;
     }
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age == null ? null : age.trim();
-    }
 
     public String getEmail() {
         return email;
@@ -51,13 +37,6 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
-    public String getHometown() {
-        return hometown;
-    }
-
-    public void setHometown(String hometown) {
-        this.hometown = hometown == null ? null : hometown.trim();
-    }
 
     public String getPosition() {
         return position;
@@ -113,21 +92,5 @@ public class User {
 
     public void setUserno(String userno) {
         this.userno = userno == null ? null : userno.trim();
-    }
-
-    public Integer getDeptid() {
-        return deptid;
-    }
-
-    public void setDeptid(Integer deptid) {
-        this.deptid = deptid;
-    }
-
-    public Integer getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(Integer roleid) {
-        this.roleid = roleid;
     }
 }

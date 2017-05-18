@@ -30,11 +30,11 @@
 				}],
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
-				    {field : 'company',title : '航班编号',halign:'center',width : 120},
-				    {field : 'country',title : '购票时间',halign:'center',width : 150},
-				    {field : 'flights',title : '订单号',halign:'center',width : 80},
-				    {field : 'airways',title : '票价',halign:'center',width : 80}, 
-				    {field : 'scope',title : '状态',halign:'center',width : 80},
+				    {field : 'company',title : '航空公司',halign:'center',width : 120},
+				    {field : 'country',title : '所属国',halign:'center',width : 150},
+				    {field : 'flights',title : '航班数',halign:'center',width : 80},
+				    {field : 'airways',title : '航线数',halign:'center',width : 80}, 
+				    {field : 'scope',title : '范围',halign:'center',width : 80},
 				]]
 			});
 			

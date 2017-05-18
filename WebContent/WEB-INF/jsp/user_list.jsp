@@ -34,13 +34,6 @@
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
 				    {field : 'userno',title : '用户名',halign:'center',width : 80},
 				    {field : 'username',title : '用户姓名',halign:'center',width : 80},
-				    {field : 'deptid',title : '所在部门',halign:'center',width : 80,formatter:function(value,rowData,rowIndex){
-				    	if(value == null || value == ""){
-				    		return value;
-				    	}else{
-				    		return value.deptName;	
-				    	}	
-				    }},
 				    {field : 'sex',title : '性别',halign:'center',width : 80,formatter:function(value,rowData,rowIndex){
 				    		if(value == "1"){
 				    			return "女";
@@ -50,17 +43,9 @@
 				    			return "";
 				    		}
 				    }},
-				    {field : 'age',title : '年龄',halign:'center',width : 80},
 				    {field : 'position',title : '职位',halign:'center',width : 80},
 				    {field : 'telphone',title : '联系方式',halign:'center',width : 100},
 				    {field : 'email',title : '邮箱',halign:'center',width : 120}, 
-				    {field : 'roleid',title : '所属角色',halign:'center',width : 80,formatter:function(value,rowData,rowIndex){
-				    	if(value == null || value == ""){
-				    		return value;
-				    	}else{
-				    		return value.roleName;	
-				    	}
-					}},
 				    {field : 'remark',title : '备注',halign:'center',width : 200}
 				]]
 			});
@@ -90,8 +75,6 @@
 					}
 				} ]
 			});
-			
-			initDeptSelect("#search-deptNo");
 		});
 		
 		function doSearch(){
