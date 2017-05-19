@@ -7,10 +7,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.mapping.DictionaryMapper;
 import com.mapping.UserMapper;
 import com.pojo.User;
-import com.service.DictionaryServiceI;
 import com.service.UserServiceI;
 @Service
 public class UserServiceImpl implements UserServiceI {
@@ -24,7 +22,6 @@ public class UserServiceImpl implements UserServiceI {
 	
 	@Override
 	public User findUserForLogin(String userNo, String pwd) {
-		// TODO Auto-generated method stub
 		User user = new User();
 		user.setUserno(userNo);
 		user.setPwd(pwd);
@@ -35,21 +32,18 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public List<User> findUserWhereSql(Map params) {
-		// TODO Auto-generated method stub
 		return this.userDao.selectUserByWhere(params);
 	}
 
 
 	@Override
 	public Long findUserCountByWhere(Map params) {
-		// TODO Auto-generated method stub
 		return this.userDao.selectUserCountByWhere(params);
 	}
 
 
 	@Override
 	public int inserUser(User user) {
-		// TODO Auto-generated method stub
 		user.setPwd("123");
 		return this.userDao.insert(user);
 	}
@@ -57,13 +51,11 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public int updateUser(User user) {
-		// TODO Auto-generated method stub
 		return this.userDao.updateByPrimaryKey(user);
 	}
 
 	@Override
 	public int deleteUser(String id) {
-		// TODO Auto-generated method stub
 		return this.userDao.deleteByPrimaryKey(Integer.parseInt(id));
 	}
 }
