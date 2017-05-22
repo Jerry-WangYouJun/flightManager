@@ -76,7 +76,7 @@
 			$("#status").val("");
 		}
 		function addGoods(){
-			var path = "${basePath}/init/status_add";
+			var path = "${basePath}/status/addinit";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
@@ -119,11 +119,11 @@
 </head>
 <body>
 	<div id="tb" title="查询条件区" class="easyui-panel"  style="padding:3px;width:85%" iconCls="icon-search">
-		<table align="center">
+		<table align="left">
 			<tr>
 				<td><span>航班编码:</span></td>
 				<td><input id="flight" name="flight"/></td>
-				<td><span>起飞时间:</span></td>
+				<td><span>航班动态 :</span></td>
 				<td>
 					<select id="status" name="status">
 						<option value="">---请选择---</option>

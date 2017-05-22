@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.core.model.Grid;
 import com.mapping.StatusMapper;
+import com.pojo.Flight;
 import com.pojo.Status;
+import com.service.FlightServiceI;
 import com.service.StatusServiceI;
 
 @Controller
@@ -24,7 +26,8 @@ public class StatusController {
 	
 	@Resource(name="statusServiceImpl")
 	private StatusServiceI statusService;
-	
+	@Resource(name="flightServiceImpl")
+	private FlightServiceI flightService;
 
 	@Resource
 	private StatusMapper statusDao;
@@ -40,6 +43,8 @@ public class StatusController {
 		ModelAndView mv = new ModelAndView("status_add");
 		List<Status> list = statusService.findStatusDicMaps();
 		mv.addObject("statuslist", list) ;
+		List<Flight> flightList = flightService.findFlightDicMaps();
+		mv.addObject("flightList", flightList);
 		return mv ;
 	}
 	
@@ -63,6 +68,8 @@ public class StatusController {
 		model.put("status",status);//userlist是个Arraylist之类的  
 		List<Status> list = statusService.findStatusDicMaps();
 		model.put("statuslist", list) ;
+		List<Flight> flightList = flightService.findFlightDicMaps();
+		model.put("flightList", flightList);
 		return new ModelAndView("status_update", model); 
 	}
 	

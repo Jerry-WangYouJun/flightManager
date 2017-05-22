@@ -16,7 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.core.model.Grid;
 import com.mapping.AirwayMapper;
 import com.pojo.Airway;
+import com.pojo.Company;
+import com.pojo.Flight;
 import com.service.AirwayServiceI;
+import com.service.CompanyServiceI;
+import com.service.FlightServiceI;
 
 @Controller
 @RequestMapping("/airway")
@@ -25,7 +29,13 @@ public class AirwayController {
 	@Resource(name="airwayServiceImpl")
 	private AirwayServiceI airwayService;
 	
+	@Resource(name="companyServiceImpl")
+	private CompanyServiceI companyService;
 
+
+	@Resource(name="flightServiceImpl")
+	private FlightServiceI flightService;
+	
 	@Resource
 	private AirwayMapper airwayDao;
 	
@@ -40,6 +50,10 @@ public class AirwayController {
 		ModelAndView mv = new ModelAndView("airway_add");
 		List<Airway> list = airwayService.findAirwayDicMaps();
 		mv.addObject("airwaylist", list) ;
+		List<Company> companyList =  companyService.findCompanyDicMaps();
+		mv.addObject("companyList", companyList);
+		List<Flight> flightList = flightService.findFlightDicMaps();
+		mv.addObject("flightList", flightList);
 		return mv ;
 	}
 	
@@ -63,6 +77,10 @@ public class AirwayController {
 		model.put("airway",airway);//userlist是个Arraylist之类的  
 		List<Airway> list = airwayService.findAirwayDicMaps();
 		model.put("airwaylist", list) ;
+		List<Company> companyList =  companyService.findCompanyDicMaps();
+		model.put("companyList", companyList) ;
+		List<Flight> flightList = flightService.findFlightDicMaps();
+		model.put("flightList", flightList);
 		return new ModelAndView("airway_update", model); 
 	}
 	

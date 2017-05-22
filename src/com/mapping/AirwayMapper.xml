@@ -10,9 +10,10 @@
     <result column="company" property="company" jdbcType="VARCHAR" />
     <result column="fromairport" property="fromairport" jdbcType="VARCHAR" />
     <result column="toairport" property="toairport" jdbcType="VARCHAR" />
+    <result column="ontime" property="ontime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, flight, startdate, flighttime, flighttype, company, fromairport , toairport
+    ID, flight, startdate, flighttime, flighttype, company, fromairport , toairport , ontime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,15 +30,18 @@
     select 
     count(1)
     from t_airway where 1=1 
-    <if test="flight != null and flight != ''" >
+   	   <if test="flight != null and flight != ''" >
 		 and flight like  CONCAT('%',#{flight},'%' )  
       </if>
-      <if test="startdate != null and startdate != ''" >
-         and startdate like CONCAT('%',#{startdate},'%' )  
+      <if test="company != null and company != ''" >
+		 and company like  CONCAT('%',#{company},'%' )  
       </if>
-      <if test="flighttime != null and flighttime != ''" >
-         and flighttime like CONCAT('%',#{flighttime},'%' )  
-       </if>
+      <if test="fromairport != null and fromairport != ''" >
+         and fromairport like CONCAT('%',#{fromairport},'%' )  
+      </if>
+      <if test="toairport != null and toairport != ''" >
+         and toairport like CONCAT('%',#{toairport},'%' )  
+      </if>
   </select>
   
   <select id="selectAirwayByWhere" resultMap="BaseResultMap" parameterType="com.pojo.Airway" >
@@ -47,12 +51,15 @@
    	  <if test="flight != null and flight != ''" >
 		 and flight like  CONCAT('%',#{flight},'%' )  
       </if>
-      <if test="startdate != null and startdate != ''" >
-         and startdate like CONCAT('%',#{startdate},'%' )  
+      <if test="company != null and company != ''" >
+		 and company like  CONCAT('%',#{company},'%' )  
       </if>
-      <if test="flighttime != null and flighttime != ''" >
-         and flighttime like CONCAT('%',#{flighttime},'%' )  
-       </if>
+     <if test="fromairport != null and fromairport != ''" >
+         and fromairport like CONCAT('%',#{fromairport},'%' )  
+      </if>
+      <if test="toairport != null and toairport != ''" >
+         and toairport like CONCAT('%',#{toairport},'%' )  
+      </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_airway
@@ -60,11 +67,11 @@
   </delete>
   <insert id="insert" parameterType="com.pojo.Airway" >
     insert into t_airway ( flight, startdate, 
-      flighttime, flighttype, company ,fromairport ,toairport 
+      flighttime, flighttype, company ,fromairport ,toairport ,ontime
       )
     values ( #{flight,jdbcType=VARCHAR}, #{startdate,jdbcType=VARCHAR}, 
       #{flighttime,jdbcType=VARCHAR}, #{flighttype,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
-      #{fromairport,jdbcType=VARCHAR} , #{toairport,jdbcType=VARCHAR}
+      #{fromairport,jdbcType=VARCHAR} , #{toairport,jdbcType=VARCHAR} ,  #{ontime,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Airway" >
@@ -91,6 +98,9 @@
        <if test="toairport != null" >
         toairport,
       </if>
+       <if test="ontime != null" >
+        ontime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="flight != null" >
@@ -113,6 +123,9 @@
       </if>
       <if test="toairport != null" >
         #{toairport,jdbcType=VARCHAR},
+      </if>
+      <if test="ontime != null" >
+        #{ontime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -140,6 +153,9 @@
       <if test="toairport != null" >
         toairport = #{toairport,jdbcType=VARCHAR},
       </if>
+      <if test="ontime != null" >
+        ontime = #{ontime,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -151,7 +167,8 @@
       flighttype = #{flighttype,jdbcType=VARCHAR},
       company = #{company,jdbcType=VARCHAR},
       fromairport = #{fromairport,jdbcType=VARCHAR},
-      toairport =  #{toairport,jdbcType=VARCHAR}
+      toairport =  #{toairport,jdbcType=VARCHAR},
+      ontime = #{ontime,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
