@@ -40,7 +40,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '供应商管理',
+				title : '机场酒店管理',
 				width :  900,
 				height : 320,
 				top:50,

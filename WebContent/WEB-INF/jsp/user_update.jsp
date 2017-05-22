@@ -53,12 +53,21 @@
 		}
 		return true;
 	}
+	$(function(){
+		var option = $("option");
+		 for(var i = 0 ; i < option.length ; i ++){
+			  if("${user.sex }" == option[i].value){
+				  option[i].selected = "selected";
+			  }  
+		 }
+	});
 </script>
 </head>
 <body>
 	<form:form id="userForm" action="${basePath }/user/user_update" modelAttribute="user" method="post">
 		<input type="hidden" name="_method" value="PUT"/>
 		<form:hidden path="id"/>
+		<form:hidden path="pwd"/>
 		<table width="100%">
 		  	<tr>
 		  		<td>用户名：</td>

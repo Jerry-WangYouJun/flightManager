@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/common.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>商品修改页面</title>
-		<jsp:include page="/common.jsp"></jsp:include>
 	<style type="text/css">
 		table{
 			font-size:12px;
@@ -33,18 +33,14 @@
        	});
 	}
 	
-	function chooseOption(obj){
-		var optionValue = $(obj).find("option:selected").val();
-		var optionText = $(obj).find("option:selected").text();
-		if(optionValue == ""){
-			$("#producttypename").val("");
-		}else{
-			$("#producttypename").val(optionText);
-		}
-		
-	}
-	
 	$(function(){
+		var option = $("option");
+		 for(var i = 0 ; i < option.length ; i ++){
+			  if("${price.flight }" == option[i].value){
+				  option[i].selected = "selected";
+			  }
+			 	  
+		 }
 	});
 </script>
 </head>
@@ -70,7 +66,12 @@
 	  	<tr>
 	  		<td>航班：</td>
 	  		<td>
-	  			<input type="text" id="flight" name="flight" size="14" value="${price.flight }" />
+	  			<select id="flight" name="flight" >
+	  				<option value="">---请选择---</option>
+	  				<c:forEach  items="${flightList }" var = "flight">
+						  	 	<option value="${flight.flight}">${flight.flight}</option>
+					</c:forEach>
+	  			</select>
 	  		</td>
 	  		<td>舱位：</td>
 	  		<td>

@@ -51,7 +51,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '用户管理',
+				title : '管理员信息',
 				width :  700,
 				height : 320,
 				top:50,

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/common.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,8 +33,6 @@
         	} 
        	});
 	}
-	$(function(){
-	});
 </script>
 </head>
 <body>
@@ -57,7 +56,12 @@
 	  	<tr>
 	  		<td>航班：</td>
 	  		<td>
-	  			<input type="text" id="flight" name="flight" size="14"  />
+	  			<select id="flight" name="flight" >
+	  				<option value="">---请选择---</option>
+	  				<c:forEach  items="${flightList }" var = "flight">
+						  	 	<option value="${flight.flight}">${flight.flight}</option>
+					</c:forEach>
+	  			</select>
 	  		</td>
 	  		<td>舱位：</td>
 	  		<td>

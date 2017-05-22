@@ -40,7 +40,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '供应商管理',
+				title : '机场管理',
 				width :  900,
 				height : 320,
 				top:50,
@@ -123,7 +123,7 @@
 </head>
 <body>
 	<div id="tb" title="查询条件区" class="easyui-panel" style="padding:3px;width:85%" iconCls="icon-search">
-		<span>酒店名称:</span>
+		<span>机场名称:</span>
 		<input id="search-airport" name="airport"/>
 		<span>所在地:</span>
 		<input id="search-address" name="address"/>

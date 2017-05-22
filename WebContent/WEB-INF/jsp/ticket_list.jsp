@@ -39,7 +39,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '航线管理',
+				title : '机票管理',
 				width :  900,
 				height : 400,
 				top:50,

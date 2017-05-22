@@ -9,7 +9,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$('#data-table').datagrid( {
-				url : '${basePath}/bus/query',
+				url : '${basePath}/passenger/query',
 				rownumbers : true,
 				autoRowHeight : true, 
 				singleSelect : true,
@@ -30,16 +30,16 @@
 				}],
 				columns:[[
 				    {field : 'id',align : 'center',halign:'center',checkbox : true}, 
-				    {field : 'bus',title : '巴士号',halign:'center',width : 120},
-				    {field : 'airport',title : '机场',halign:'center',width : 150},
-				    {field : 'startpoint',title : '起点',halign:'center',width : 80},
-				    {field : 'endpoint',title : '终点',halign:'center',width : 80}, 
-				    {field : 'times',title : '用时',halign:'center',width : 80},
+				    {field : 'passenger',title : '乘客姓名',halign:'center',width : 120},
+				    {field : 'idcard',title : '身份证号',halign:'center',width : 150},
+				    {field : 'telephone',title : '联系电话',halign:'center',width : 80},
+				    {field : 'linkman',title : '紧急联系人',halign:'center',width : 80}, 
+				    {field : 'linkphone',title : '联系人电话',halign:'center',width : 80},
 				]]
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '航线管理',
+				title : 'vip管理',
 				width :  900,
 				height : 400,
 				top:50,
@@ -66,26 +66,26 @@
 		});
 		
 		function doSearch(){
-			var bus = $("#bus").val();
-			var airport = $("#airport").val();
-			var startpoint = $("#startpoint").val();
-			var endpoint = $("#endpoint").val();
-			var times = $("#times").val();
+			var passenger = $("#passenger").val();
+			var idcard = $("#idcard").val();
+			var telephone = $("#telephone").val();
+			var linkman = $("#linkman").val();
+			var linkphone = $("#linkphone").val();
 			$('#data-table').datagrid('reload',{
-				bus:bus,airport:airport,startpoint:startpoint,
-				endpoint:endpoint,times:times
+				passenger:passenger,idcard:idcard,telephone:telephone,
+				linkman:linkman,linkphone:linkphone
 			} );
 		}
 		function doClear(){
-			$("#bus").val("");
-			$("#airport").val("");
-			$("#startpoint").val("");
-			$("#endpoint").val("");
-			$("#times").combo("setText","");
-			$("#times").combo("setValue","");
+			$("#passenger").val("");
+			$("#idcard").val("");
+			$("#telephone").val("");
+			$("#linkman").val("");
+			$("#linkphone").combo("setText","");
+			$("#linkphone").combo("setValue","");
 		}
 		function addGoods(){
-			var path = "${basePath}/init/bus_add";
+			var path = "${basePath}/passenger/addinit";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
@@ -96,7 +96,7 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}		
-			var path = "${basePath}/bus/updateinit?id=" + obj.id;
+			var path = "${basePath}/passenger/updateinit?id=" + obj.id;
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
@@ -107,7 +107,7 @@
 				$.messager.alert('提示', "请先选中一行(只允许单行操作)", 'error');
 				return;
 			}	
-			var url = "${basePath}/bus/delete";
+			var url = "${basePath}/passenger/delete";
 			$.ajax( {
 				url : url,
 				type : 'post',
@@ -131,7 +131,7 @@
 		<table align="left">
 			<tr>
 				<td><span>折扣类型:</span></td>
-				<td><input id="airport" name="airport"/></td>
+				<td><input id="idcard" name="idcard"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>
 				</td>

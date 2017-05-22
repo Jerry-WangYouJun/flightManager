@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>供应商添加页面</title>
+<title>航班添加页面</title>
 	<jsp:include page="/common.jsp"></jsp:include>
 	<style type="text/css">
 		table{

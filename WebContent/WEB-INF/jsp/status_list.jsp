@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>饲料管理</title>
+<title>航班动态管理</title>
 	<jsp:include page="/common.jsp"></jsp:include>
 	<script type="text/javascript">
 		$(function(){
@@ -38,7 +38,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '航线管理',
+				title : '航班动态管理',
 				width :  900,
 				height : 400,
 				top:50,

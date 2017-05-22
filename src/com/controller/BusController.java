@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.core.model.Grid;
 import com.mapping.BusMapper;
+import com.pojo.Airport;
 import com.pojo.Bus;
+import com.service.AirportServiceI;
 import com.service.BusServiceI;
 
 @Controller
@@ -25,6 +27,8 @@ public class BusController {
 	@Resource(name="busServiceImpl")
 	private BusServiceI busService;
 	
+	@Resource(name="airportServiceImpl")
+	private AirportServiceI airportService;
 
 	@Resource
 	private BusMapper busDao;
@@ -40,6 +44,8 @@ public class BusController {
 		ModelAndView mv = new ModelAndView("bus_add");
 		List<Bus> list = busService.findBusDicMaps();
 		mv.addObject("buslist", list) ;
+		List<Airport> airPortList = airportService.findAirportDicMaps();
+		mv.addObject("airPortList", airPortList);
 		return mv ;
 	}
 	
@@ -63,6 +69,8 @@ public class BusController {
 		model.put("bus",bus);//userlist是个Arraylist之类的  
 		List<Bus> list = busService.findBusDicMaps();
 		model.put("buslist", list) ;
+		List<Airport> airPortList = airportService.findAirportDicMaps();
+		model.put("airPortList", airPortList);
 		return new ModelAndView("bus_update", model); 
 	}
 	

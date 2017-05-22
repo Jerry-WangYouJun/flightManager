@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>饲料管理</title>
+<title>巴士管理</title>
 	<jsp:include page="/common.jsp"></jsp:include>
 	<script type="text/javascript">
 		$(function(){
@@ -39,7 +39,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '航线管理',
+				title : '巴士管理',
 				width :  900,
 				height : 400,
 				top:50,
@@ -85,7 +85,7 @@
 			$("#times").combo("setValue","");
 		}
 		function addGoods(){
-			var path = "${basePath}/init/bus_add";
+			var path = "${basePath}/bus/addinit";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}
@@ -130,7 +130,7 @@
 	<div id="tb" title="查询条件区" class="easyui-panel"  style="padding:3px;width:85%" iconCls="icon-search">
 		<table align="left">
 			<tr>
-				<td><span>折扣类型:</span></td>
+				<td><span>机场名称:</span></td>
 				<td><input id="airport" name="airport"/></td>
 				<td>
 					<a href="####" class="easyui-linkbutton" plain="true" iconCls="icon-search" onclick="doSearch()">查询</a>

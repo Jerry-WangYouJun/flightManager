@@ -39,7 +39,7 @@
 			});
 			
 			$('#dlg-frame').dialog( {
-				title : '航线管理',
+				title : '票价管理',
 				width :  900,
 				height : 400,
 				top:50,
@@ -85,7 +85,7 @@
 			$("#classtype").combo("setValue","");
 		}
 		function addGoods(){
-			var path = "${basePath}/init/price_add";
+			var path = "${basePath}/price/addinit";
 			document.getElementById('frameContent').src = path;
 			$('#dlg-frame').dialog('open');
 		}

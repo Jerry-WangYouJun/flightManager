@@ -17,9 +17,9 @@
 <script type="text/javascript">
 	function doServlet(){
 		$.ajax({
-	    	url : "${basePath}/bus/update",
+	    	url : "${basePath}/passenger/update",
        		type:'post',  
-       		data: $("#busForm").serialize(),
+       		data: $("#passengerForm").serialize(),
        		dataType: 'text',
        		success: function(data){
 	       		if(data > 0) {
@@ -32,49 +32,35 @@
         	} 
        	});
 	}
-	
-	function chooseOption(obj){
-		var optionValue = $(obj).find("option:selected").val();
-		var optionText = $(obj).find("option:selected").text();
-		if(optionValue == ""){
-			$("#producttypename").val("");
-		}else{
-			$("#producttypename").val(optionText);
-		}
-		
-	}
-	
-	$(function(){
-	});
 </script>
 </head>
 <body>
-	<form id="busForm" action="" method="post">
-	    <input type="hidden" value="${bus.id }" name = "id">
+	<form id="passengerForm" action="" method="post">
+	    <input type="hidden" value="${passenger.id }" name = "id">
 	 <table width="100%">
 	  	<tr>
-	  		<td>巴士号：</td>
+	  		<td>乘客名称：</td>
 	  		<td>
-	  			<input type="text" id = "bus" name="bus" size="14"value="${bus.bus }"  />
+	  			<input type="text" id = "passenger" name="passenger" size="14"value="${passenger.passenger }"  />
 	  		</td>
-	  		<td>机场：</td>
+	  		<td>身份证号：</td>
 	  		<td>
-	  			<input type="text" id = "airport" name="airport" size="14" value="${bus.airport }"/>
+	  			<input type="text" id = "idcard" name="idcard" size="14" value="${passenger.idcard }"/>
 	  		</td>
-	  		<td>出发点：</td>
+	  		<td>联系电话：</td>
 	  		<td>
-	  			<input type="text" id = "startpoint" name="startpoint" size="14" value="${bus.startpoint }"/>
+	  			<input type="text" id = "telephone" name="telephone" size="14" value="${passenger.telephone }"/>
 	  		</td>
 	  	</tr>
 	  	
 	  	<tr>
-	  		<td>目的地：</td>
+	  		<td>紧急联系人：</td>
 	  		<td>
-	  			<input type="text" id="endpoint" name="endpoint" size="14" value="${bus.endpoint }" />
+	  			<input type="text" id="linkman" name="linkman" size="14" value="${passenger.linkman }" />
 	  		</td>
-	  		<td>用时（分）：</td>
+	  		<td>联系人电话：</td>
 	  		<td>
-	  			<input type="text" id="times" name="times" size="14" value="${bus.times }" />
+	  			<input type="text" id="linkphone" name="linkphone" size="14" value="${passenger.linkphone }" />
 	  		</td>
 	  	</tr>
 	  </table>

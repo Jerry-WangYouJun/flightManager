@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.core.model.Grid;
 import com.mapping.PriceMapper;
+import com.pojo.Flight;
 import com.pojo.Price;
+import com.service.FlightServiceI;
 import com.service.PriceServiceI;
 
 @Controller
@@ -25,6 +27,8 @@ public class PriceController {
 	@Resource(name="priceServiceImpl")
 	private PriceServiceI priceService;
 	
+	@Resource(name="flightServiceImpl")
+	private FlightServiceI flightService;
 
 	@Resource
 	private PriceMapper priceDao;
@@ -40,6 +44,8 @@ public class PriceController {
 		ModelAndView mv = new ModelAndView("price_add");
 		List<Price> list = priceService.findPriceDicMaps();
 		mv.addObject("pricelist", list) ;
+		List<Flight> flightList = flightService.findFlightDicMaps();
+		mv.addObject("flightList", flightList);
 		return mv ;
 	}
 	
@@ -63,6 +69,8 @@ public class PriceController {
 		model.put("price",price);//userlist是个Arraylist之类的  
 		List<Price> list = priceService.findPriceDicMaps();
 		model.put("pricelist", list) ;
+		List<Flight> flightList = flightService.findFlightDicMaps();
+		model.put("flightList", flightList);
 		return new ModelAndView("price_update", model); 
 	}
 	

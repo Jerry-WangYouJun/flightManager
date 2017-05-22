@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>商品修改页面</title>
+<title>航班动态管理</title>
 	<style type="text/css">
 		table{
 			font-size:12px;
@@ -86,7 +86,7 @@
 	  	<tr>
 	  		<td>预期到达时间：</td>
 	  		<td>
-	  			<input type="text" id = "pretime" name="pretime" size="14" value="${status.pretime }"/>
+	  			<input type="text" id = "pretime" name="pretime" size="14" value="${status.pretime }" class="easyui-datebox"/>
 	  		</td>
 	  		<td>原因：</td>
 	  		<td>

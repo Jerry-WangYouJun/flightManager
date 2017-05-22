@@ -23,7 +23,6 @@ public class HotelController {
 	
 	@Resource(name="hotelServiceImpl")
 	private HotelServiceI hotelService;
-	
 
 	@Resource
 	private HotelMapper hotelDao;

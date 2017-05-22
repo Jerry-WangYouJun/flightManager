@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.core.model.Grid;
 import com.mapping.PassengerMapper;
+import com.pojo.Airport;
 import com.pojo.Passenger;
+import com.service.AirportServiceI;
 import com.service.PassengerServiceI;
 
 @Controller
@@ -25,7 +27,9 @@ public class PassengerController {
 	@Resource(name="passengerServiceImpl")
 	private PassengerServiceI passengerService;
 	
-
+	@Resource(name="airportServiceImpl")
+	private AirportServiceI airportService;
+	
 	@Resource
 	private PassengerMapper passengerDao;
 	
@@ -40,6 +44,8 @@ public class PassengerController {
 		ModelAndView mv = new ModelAndView("passenger_add");
 		List<Passenger> list = passengerService.findPassengerDicMaps();
 		mv.addObject("passengerlist", list) ;
+		List<Airport> airPortList = airportService.findAirportDicMaps();
+		mv.addObject("airPortList", airPortList);
 		return mv ;
 	}
 	
@@ -63,6 +69,8 @@ public class PassengerController {
 		model.put("passenger",passenger);//userlist是个Arraylist之类的  
 		List<Passenger> list = passengerService.findPassengerDicMaps();
 		model.put("passengerlist", list) ;
+		List<Airport> airPortList = airportService.findAirportDicMaps();
+		model.put("airPortList", airPortList);
 		return new ModelAndView("passenger_update", model); 
 	}
 	
